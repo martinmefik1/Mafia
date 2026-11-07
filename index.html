@@ -15,7 +15,7 @@
     justify-content: center;
     align-items: flex-start;
     color: #e8e0f0;
-    padding: 16px 12px; /* Уменьшены отступы для мобилок */
+    padding: 16px 12px;
     position: relative;
   }
   body::before {
@@ -26,7 +26,7 @@
       radial-gradient(circle at 80% 70%, rgba(255, 100, 150, 0.08) 0%, transparent 40%);
     pointer-events: none; z-index: 0;
   }
-  .container { max-width: 600px; width: 100%; position: relative; z-index: 1; } /* Сужен для мобилок */
+  .container { max-width: 600px; width: 100%; position: relative; z-index: 1; }
   header { text-align: center; margin-bottom: 20px; }
   h1 {
     font-size: 2em;
@@ -410,7 +410,8 @@
       <div class="timer-circle" id="discTimerCircle">
         <div class="timer-inner" id="discTimerText">02:00</div>
       </div>
-      <div class="pass-text" style="margin-top: 15px;">Задавайте вопросы и пытайтесь понять, кто не знает локацию.</div>
+      <div class="pass-text" style="margin-top: 15px; margin-bottom: 20px;">Задавайте вопросы и пытайтесь понять, кто не знает локацию.</div>
+      <button class="btn btn-neutral btn-large" id="earlyFinishDiscussionBtn">⏩ Завершить обсуждение</button>
     </div>
   </div>
 
@@ -419,9 +420,10 @@
     <div style="text-align: center; padding: 10px 0;">
       <div class="pass-title" style="margin-bottom: 15px; color: #ffd54f;">Голосование!</div>
       <div class="timer-circle vote-timer" id="voteTimerCircle">
-        <div class="timer-inner" id="voteTimerText">00:40</div>
+        <div class="timer-inner" id="voteTimerText">00:10</div>
       </div>
-      <div class="pass-text" style="margin-top: 15px;">Обсудите, кого вы подозреваете, и приготовьтесь сделать выбор.</div>
+      <div class="pass-text" style="margin-top: 15px; margin-bottom: 20px;">Обсудите, кого вы подозреваете, и приготовьтесь сделать выбор.</div>
+      <button class="btn btn-neutral btn-large" id="earlyFinishVotingBtn">⏩ Завершить голосование</button>
     </div>
   </div>
 
@@ -816,10 +818,22 @@ $('startDiscussionBtn').addEventListener('click', () => {
   startSpyTimer('discussion');
 });
 
+// Досрочное завершение обсуждения
+$('earlyFinishDiscussionBtn').addEventListener('click', () => {
+  clearInterval(state.timerInterval);
+  startSpyTimer('voting');
+});
+
+// Досрочное завершение голосования
+$('earlyFinishVotingBtn').addEventListener('click', () => {
+  clearInterval(state.timerInterval);
+  showEliminationScreen();
+});
+
 function startSpyTimer(type) {
   showScreen(type === 'discussion' ? 'discussionCard' : 'votingCard');
   
-  let totalSeconds = type === 'discussion' ? state.spyTimeMinutes * 60 : 40;
+  let totalSeconds = type === 'discussion' ? state.spyTimeMinutes * 60 : 10; // 10 секунд на голосование
   let left = totalSeconds;
   
   const circle = type === 'discussion' ? $('discTimerCircle') : $('voteTimerCircle');
