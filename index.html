@@ -3,473 +3,317 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>🎭 Мафия — Тайные роли</title>
+<title>🎭 Мафия & 🕵️ Шпион</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-  html, body {
-    overflow-x: hidden; /* Защита от горизонтального скролла */
-    width: 100%;
-  }
+  html, body { overflow-x: hidden; width: 100%; }
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: radial-gradient(ellipse at top, #2a1a3e 0%, #1a1028 50%, #0d0715 100%);
+    background: radial-gradient(ellipse at top, #1a1028 0%, #0d0715 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     color: #e8e0f0;
-    padding: 24px 16px;
+    padding: 20px 16px;
     position: relative;
   }
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background:
       radial-gradient(circle at 20% 30%, rgba(200, 100, 255, 0.08) 0%, transparent 40%),
       radial-gradient(circle at 80% 70%, rgba(255, 100, 150, 0.08) 0%, transparent 40%);
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
   }
-  .container {
-    max-width: 820px;
-    width: 100%;
-    position: relative;
-    z-index: 1;
-  }
-  header { text-align: center; margin-bottom: 26px; }
+  .container { max-width: 820px; width: 100%; position: relative; z-index: 1; }
+  header { text-align: center; margin-bottom: 24px; }
   h1 {
-    font-size: 2.4em;
+    font-size: 2.2em;
     background: linear-gradient(135deg, #ff6ec7, #b06ab3, #4568dc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 8px;
-    letter-spacing: 2px;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 8px; letter-spacing: 2px;
     filter: drop-shadow(0 0 20px rgba(255, 110, 199, 0.4));
   }
   .subtitle { color: #a89bb8; font-size: 0.92em; letter-spacing: 1px; }
   .card {
     background: linear-gradient(145deg, rgba(40, 25, 60, 0.92), rgba(25, 15, 40, 0.92));
-    border-radius: 20px;
-    padding: 26px 20px;
-    margin-bottom: 20px;
+    border-radius: 20px; padding: 24px 20px; margin-bottom: 20px;
     border: 1px solid rgba(176, 106, 179, 0.25);
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    width: 100%;
+    backdrop-filter: blur(10px); width: 100%;
   }
   .section-title {
-    font-size: 1.1em;
-    margin-bottom: 14px;
-    color: #ff6ec7;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 600;
+    font-size: 1.1em; margin-bottom: 14px; color: #ff6ec7;
+    display: flex; align-items: center; gap: 10px; font-weight: 600;
   }
   .section-title .icon { font-size: 1.3em; }
   .hint { font-size: 0.82em; color: #8a7a9a; margin-bottom: 14px; line-height: 1.5; }
-  .input-row { display: flex; gap: 10px; margin-bottom: 12px; animation: slideIn 0.3s; width: 100%; }
-  input[type="text"] {
-    flex: 1;
-    padding: 13px 16px;
-    background: rgba(10, 5, 20, 0.7);
-    border: 1.5px solid rgba(176, 106, 179, 0.3);
-    border-radius: 12px;
-    color: #e8e0f0;
-    font-size: 1em;
-    font-family: inherit;
-    transition: all 0.25s;
-    outline: none;
-    min-width: 0;
-  }
-  input[type="text"]:focus {
-    border-color: #ff6ec7;
-    box-shadow: 0 0 0 3px rgba(255, 110, 199, 0.15);
-    background: rgba(10, 5, 20, 0.9);
-  }
-  input[type="text"]::placeholder { color: #6a5a7a; }
-  input[type="text"]:disabled { opacity: 0.5; cursor: not-allowed; }
   
+  /* Mode selector */
+  .mode-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+  .mode-btn {
+    flex: 1; padding: 15px 10px; border-radius: 14px; border: 2px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03); color: #a89bb8; font-weight: 700; font-size: 1em;
+    cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 5px;
+  }
+  .mode-btn.active {
+    background: linear-gradient(135deg, rgba(255, 110, 199, 0.2), rgba(176, 106, 179, 0.2));
+    border-color: #ff6ec7; color: #fff; box-shadow: 0 5px 20px rgba(255, 110, 199, 0.2);
+  }
+  .mode-btn span.emoji { font-size: 1.5em; }
+
+  .input-row { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; }
+  input[type="text"], select {
+    flex: 1; padding: 13px 16px; background: rgba(10, 5, 20, 0.7);
+    border: 1.5px solid rgba(176, 106, 179, 0.3); border-radius: 12px;
+    color: #e8e0f0; font-size: 1em; font-family: inherit; outline: none; min-width: 0;
+  }
+  input[type="text"]:focus, select:focus { border-color: #ff6ec7; box-shadow: 0 0 0 3px rgba(255, 110, 199, 0.15); }
+  select option { background: #1a1028; color: #fff; }
+
   .btn {
-    padding: 13px 22px;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 1em;
-    font-family: inherit;
-    transition: all 0.25s;
-    letter-spacing: 0.5px;
-    /* Убрали nowrap, чтобы текст переносился на мобилках */
-    text-align: center;
+    padding: 13px 22px; border: none; border-radius: 12px; cursor: pointer;
+    font-weight: 600; font-size: 1em; font-family: inherit; transition: all 0.25s;
+    letter-spacing: 0.5px; text-align: center;
   }
   .btn-primary {
-    background: linear-gradient(135deg, #ff6ec7, #b06ab3);
-    color: white;
+    background: linear-gradient(135deg, #ff6ec7, #b06ab3); color: white;
     box-shadow: 0 5px 20px rgba(255, 110, 199, 0.35);
   }
-  .btn-primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255, 110, 199, 0.55); }
   .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
   .btn-ghost {
-    background: rgba(176, 106, 179, 0.15);
-    color: #d4a8e8;
-    border: 1px solid rgba(176, 106, 179, 0.35);
+    background: rgba(176, 106, 179, 0.15); color: #d4a8e8; border: 1px solid rgba(176, 106, 179, 0.35);
   }
-  .btn-ghost:hover:not(:disabled) { background: rgba(176, 106, 179, 0.28); transform: translateY(-2px); }
   .btn-danger {
-    background: rgba(255, 80, 100, 0.15);
-    color: #ff7088;
-    border: 1px solid rgba(255, 80, 100, 0.35);
-    padding: 8px 12px;
-    font-size: 0.9em;
+    background: rgba(255, 80, 100, 0.15); color: #ff7088;
+    border: 1px solid rgba(255, 80, 100, 0.35); padding: 8px 12px; font-size: 0.9em;
   }
-  .btn-danger:hover { background: rgba(255, 80, 100, 0.3); }
-  
+  .btn-large { font-size: 1.1em; padding: 16px 20px; width: 100%; max-width: 400px; display: block; margin: 0 auto; white-space: normal; line-height: 1.3; }
+
   .player-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    background: rgba(255, 255, 255, 0.03);
-    border-radius: 12px;
-    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.03); border-radius: 12px; margin-bottom: 8px;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    animation: slideIn 0.3s;
   }
   .player-number {
-    width: 32px; height: 32px;
-    border-radius: 50%;
+    width: 30px; height: 30px; border-radius: 50%;
     background: linear-gradient(135deg, #b06ab3, #4568dc);
     display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 0.9em; flex-shrink: 0;
+    font-weight: 700; font-size: 0.85em; flex-shrink: 0;
   }
-  .player-name-text {
-    flex: 1; font-size: 1.05em; font-weight: 500;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .empty-state {
-    text-align: center; padding: 25px;
-    color: #6a5a7a; font-style: italic; font-size: 0.9em;
-  }
-  .roles-info {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-    gap: 12px;
-    margin-top: 8px;
-  }
-  .role-info-item {
-    padding: 14px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    text-align: center;
-    transition: all 0.25s;
-    position: relative;
-  }
-  .role-info-item:hover { transform: translateY(-3px); border-color: rgba(176, 106, 179, 0.4); }
-  .role-info-item .emoji { font-size: 1.8em; display: block; margin-bottom: 6px; }
-  .role-info-item .rname { font-weight: 600; font-size: 0.95em; margin-bottom: 3px; }
-  .role-info-item .rdesc { font-size: 0.75em; color: #8a7a9a; }
-  .role-info-item .rcount {
-    position: absolute; top: 8px; right: 8px;
-    font-size: 0.7em; padding: 2px 7px; border-radius: 10px;
-    background: rgba(255, 110, 199, 0.2); color: #ff6ec7;
-    font-weight: 700; min-width: 22px;
-  }
-  .composition-box {
-    padding: 16px 18px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, rgba(255, 110, 199, 0.08), rgba(69, 104, 220, 0.08));
-    border: 1px solid rgba(176, 106, 179, 0.3);
-    margin-bottom: 16px;
-  }
-  .composition-box .comp-title {
-    font-size: 0.85em; color: #a89bb8;
-    margin-bottom: 10px; font-weight: 600; letter-spacing: 0.5px;
-  }
-  .comp-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .comp-chip {
-    padding: 6px 12px; border-radius: 20px;
-    font-size: 0.82em; font-weight: 600;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex; align-items: center; gap: 5px;
-  }
-  .comp-chip.mafia { background: rgba(233, 69, 96, 0.15); border-color: rgba(233, 69, 96, 0.4); color: #ff7088; }
-  .comp-chip.citizen { background: rgba(100, 181, 246, 0.15); border-color: rgba(100, 181, 246, 0.4); color: #64b5f6; }
-  .comp-chip.doctor { background: rgba(102, 187, 106, 0.15); border-color: rgba(102, 187, 106, 0.4); color: #66bb6a; }
-  .comp-chip.detective { background: rgba(186, 104, 200, 0.15); border-color: rgba(186, 104, 200, 0.4); color: #ba68c8; }
+  .player-name-text { flex: 1; font-size: 1em; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   
-  .actions-row { display: flex; gap: 12px; flex-wrap: wrap; width: 100%; }
+  .actions-row { display: flex; gap: 10px; flex-wrap: wrap; width: 100%; }
   .actions-row .btn { flex: 1; min-width: 140px; }
-  .count-badge {
-    display: inline-block; padding: 2px 10px; border-radius: 20px;
-    background: rgba(176, 106, 179, 0.2); color: #d4a8e8;
-    font-size: 0.75em; font-weight: 600; margin-left: 6px;
-  }
 
-  /* ===== Экран вскрытия ===== */
+  /* ===== Экраны вскрытия ===== */
   .reveal-stage { text-align: center; padding: 10px 0; }
-  .reveal-progress { display: flex; justify-content: center; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
+  .reveal-progress { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
   .reveal-dot {
-    width: 34px; height: 34px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.85em; font-weight: 700;
-    background: rgba(255,255,255,0.06);
-    border: 1.5px solid rgba(255,255,255,0.12);
-    color: #8a7a9a;
-    transition: all 0.3s;
+    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 0.8em; font-weight: 700; background: rgba(255,255,255,0.06);
+    border: 1.5px solid rgba(255,255,255,0.12); color: #8a7a9a; transition: all 0.3s;
   }
-  .reveal-dot.done {
-    background: linear-gradient(135deg, #66bb6a, #43a047);
-    border-color: transparent; color: white;
-  }
-  .reveal-dot.current {
-    background: linear-gradient(135deg, #ff6ec7, #b06ab3);
-    border-color: transparent; color: white;
-    box-shadow: 0 0 18px rgba(255,110,199,0.6);
-    transform: scale(1.12);
-  }
-  .reveal-name { font-size: 1.6em; font-weight: 700; margin-bottom: 6px; color: #fff; word-wrap: break-word; }
-  .reveal-instruction {
-    color: #a89bb8; font-size: 0.9em; margin-bottom: 24px; line-height: 1.5;
-  }
+  .reveal-dot.done { background: linear-gradient(135deg, #66bb6a, #43a047); border-color: transparent; color: white; }
+  .reveal-dot.current { background: linear-gradient(135deg, #ff6ec7, #b06ab3); border-color: transparent; color: white; box-shadow: 0 0 15px rgba(255,110,199,0.6); transform: scale(1.1); }
+  .reveal-name { font-size: 1.5em; font-weight: 700; margin-bottom: 6px; color: #fff; word-wrap: break-word; }
+  .reveal-instruction { color: #a89bb8; font-size: 0.9em; margin-bottom: 20px; line-height: 1.5; }
 
-  /* Карточка */
   .flip-card {
-    width: 100%;
-    max-width: 280px;
-    aspect-ratio: 3 / 4;
-    margin: 0 auto 24px;
-    perspective: 1200px;
-    cursor: pointer;
+    width: 100%; max-width: 280px; aspect-ratio: 3 / 4; margin: 0 auto 20px;
+    perspective: 1200px; cursor: pointer;
   }
   .flip-inner {
-    position: relative;
-    width: 100%; height: 100%;
-    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transform-style: preserve-3d;
+    position: relative; width: 100%; height: 100%;
+    transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d;
   }
   .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
   .flip-face {
-    position: absolute;
-    inset: 0;
-    backface-visibility: hidden;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    overflow: hidden;
+    position: absolute; inset: 0; backface-visibility: hidden; border-radius: 20px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px; overflow: hidden; text-align: center;
   }
   .flip-back {
-    background:
-      repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 10px, transparent 10px 20px),
-      linear-gradient(145deg, #3a2555, #1e1230);
+    background: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 10px, transparent 10px 20px), linear-gradient(145deg, #3a2555, #1e1230);
     border: 2px solid rgba(176, 106, 179, 0.5);
     box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 40px rgba(176,106,179,0.15);
   }
   .flip-back .qmark {
-    font-size: 5em;
-    background: linear-gradient(135deg, #ff6ec7, #4568dc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 25px rgba(255,110,199,0.5));
-    animation: pulse 2s infinite;
+    font-size: 5em; background: linear-gradient(135deg, #ff6ec7, #4568dc);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 25px rgba(255,110,199,0.5)); animation: pulse 2s infinite;
   }
   .flip-back .tap-hint { margin-top: 18px; font-size: 0.9em; color: #b0a0c0; letter-spacing: 1px; }
   .flip-front {
-    transform: rotateY(180deg);
-    border: 2px solid rgba(255,255,255,0.15);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    transform: rotateY(180deg); border: 2px solid rgba(255,255,255,0.15); box-shadow: 0 20px 50px rgba(0,0,0,0.6);
   }
-  .flip-front .role-emoji { font-size: 4.5em; margin-bottom: 12px; }
-  .flip-front .role-name { font-size: 1.5em; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; text-align: center; }
-  .flip-front .role-desc {
-    font-size: 0.85em; color: rgba(255,255,255,0.85);
-    text-align: center; line-height: 1.5; padding: 0 10px;
-  }
+  .flip-front .role-emoji { font-size: 4em; margin-bottom: 10px; }
+  .flip-front .role-name { font-size: 1.4em; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
+  .flip-front .role-desc { font-size: 0.85em; color: rgba(255,255,255,0.85); line-height: 1.5; padding: 0 10px; }
   .flip-front .role-team {
-    margin-top: 16px; font-size: 0.75em; font-weight: 700;
-    padding: 5px 14px; border-radius: 20px;
-    letter-spacing: 1px;
-    background: rgba(255,255,255,0.2); color: #fff;
+    margin-top: 15px; font-size: 0.75em; font-weight: 700; padding: 5px 14px; border-radius: 20px;
+    letter-spacing: 1px; background: rgba(255,255,255,0.2); color: #fff;
   }
+  
+  /* Цвета мафии */
   .front-mafia { background: linear-gradient(145deg, #7a1f2e, #4a0f1a); }
   .front-citizen { background: linear-gradient(145deg, #1e4a7a, #0f2a4a); }
   .front-doctor { background: linear-gradient(145deg, #1f6b3a, #0f3a20); }
   .front-detective { background: linear-gradient(145deg, #5a2a7a, #2f0f4a); }
+  
+  /* Цвета шпиона */
+  .front-spy { background: linear-gradient(145deg, #8a2be2, #4b0082); }
+  .front-location { background: linear-gradient(145deg, #2e4a62, #1a2a3a); }
 
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.08); opacity: 0.85; }
+  @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.08); opacity: 0.85; } }
+
+  /* ===== Экран таймера / голосования ===== */
+  .timer-circle {
+    width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 20px;
+    background: conic-gradient(#ff6ec7 0%, rgba(255,255,255,0.1) 0%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; box-shadow: 0 0 30px rgba(255,110,199,0.2);
+  }
+  .timer-inner {
+    width: 140px; height: 140px; border-radius: 50%;
+    background: #1e1230; display: flex; align-items: center; justify-content: center;
+    font-size: 2.5em; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums;
+  }
+  .timer-circle.warning { background: conic-gradient(#ff4444 0%, rgba(255,255,255,0.1) 0%); box-shadow: 0 0 30px rgba(255,68,68,0.4); }
+  .timer-circle.warning .timer-inner { color: #ff7088; animation: pulse 1s infinite; }
+  
+  .location-display {
+    font-size: 1.8em; font-weight: 800; color: #fff; margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.3);
   }
 
   /* ===== Экран передачи ведущему ===== */
-  .pass-stage { text-align: center; padding: 20px 10px; }
-  .pass-icon {
-    font-size: 4em;
-    margin-bottom: 18px;
-    animation: pulse 2s infinite;
-    display: inline-block;
-  }
+  .pass-icon { font-size: 4em; margin-bottom: 16px; animation: pulse 2s infinite; display: inline-block; }
   .pass-title {
-    font-size: 1.5em;
-    font-weight: 700;
-    margin-bottom: 12px;
+    font-size: 1.5em; font-weight: 700; margin-bottom: 12px;
     background: linear-gradient(135deg, #ffd54f, #ff8a65);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.3;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.3;
   }
-  .pass-text {
-    color: #a89bb8;
-    font-size: 0.95em;
-    line-height: 1.6;
-    max-width: 460px;
-    margin: 0 auto 28px;
-  }
+  .pass-text { color: #a89bb8; font-size: 0.95em; line-height: 1.6; max-width: 460px; margin: 0 auto 24px; }
   
-  /* Кнопка ведущего (Исправлена под мобильные) */
   .host-open-btn {
-    font-size: 1.1em;
-    padding: 16px 20px;
-    background: linear-gradient(135deg, #ffd54f, #ff8a65);
-    color: #2a1a0a;
-    box-shadow: 0 6px 24px rgba(255, 200, 80, 0.4);
-    width: 100%;
-    max-width: 400px;
-    display: block;
-    margin: 0 auto;
-    white-space: normal; /* Разрешаем перенос текста */
-    line-height: 1.3;
-  }
-  .host-open-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 32px rgba(255, 200, 80, 0.6);
+    font-size: 1.1em; padding: 16px 20px; background: linear-gradient(135deg, #ffd54f, #ff8a65);
+    color: #2a1a0a; box-shadow: 0 6px 24px rgba(255, 200, 80, 0.4);
+    width: 100%; max-width: 400px; display: block; margin: 0 auto; white-space: normal; line-height: 1.3;
   }
   .warning-note {
-    margin-top: 22px;
-    padding: 12px 16px;
-    background: rgba(255, 80, 100, 0.1);
-    border: 1px solid rgba(255, 80, 100, 0.3);
-    border-radius: 12px;
-    color: #ff9aab;
-    font-size: 0.82em;
-    max-width: 460px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.5;
+    margin-top: 20px; padding: 12px 16px; background: rgba(255, 80, 100, 0.1);
+    border: 1px solid rgba(255, 80, 100, 0.3); border-radius: 12px; color: #ff9aab;
+    font-size: 0.82em; max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.5;
   }
 
-  /* ===== Панель ведущего ===== */
   .host-panel-warning {
-    text-align: center;
-    padding: 16px;
-    background: rgba(255, 200, 80, 0.1);
-    border: 1px solid rgba(255, 200, 80, 0.35);
-    border-radius: 14px;
-    margin-bottom: 20px;
-    color: #ffd54f;
-    font-size: 0.9em;
-    line-height: 1.5;
+    text-align: center; padding: 14px; background: rgba(255, 200, 80, 0.1);
+    border: 1px solid rgba(255, 200, 80, 0.35); border-radius: 14px;
+    margin-bottom: 18px; color: #ffd54f; font-size: 0.9em; line-height: 1.5;
   }
-  .results-grid { display: grid; gap: 12px; }
+  .results-grid { display: grid; gap: 10px; }
   .result-card {
-    display: flex; align-items: center; gap: 14px;
-    padding: 16px 18px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, rgba(40, 25, 60, 0.95), rgba(30, 18, 48, 0.95));
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    animation: revealCard 0.5s backwards;
-    position: relative;
-    overflow: hidden;
+    display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+    border-radius: 14px; background: linear-gradient(135deg, rgba(40, 25, 60, 0.95), rgba(30, 18, 48, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.08); animation: revealCard 0.5s backwards; position: relative; overflow: hidden;
   }
-  .result-card::before {
-    content: '';
-    position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
-  }
+  .result-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; }
   .result-card.role-citizen::before { background: linear-gradient(180deg, #64b5f6, #42a5f5); }
   .result-card.role-doctor::before { background: linear-gradient(180deg, #66bb6a, #43a047); }
   .result-card.role-detective::before { background: linear-gradient(180deg, #ba68c8, #9c27b0); }
   .result-card.role-mafia::before { background: linear-gradient(180deg, #e94560, #c2185b); }
+  .result-card.role-spy::before { background: linear-gradient(180deg, #8a2be2, #4b0082); }
+  .result-card.role-location::before { background: linear-gradient(180deg, #64b5f6, #42a5f5); }
+  
   .result-avatar {
-    width: 48px; height: 48px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5em; flex-shrink: 0;
-    background: rgba(255, 255, 255, 0.06);
+    width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.4em; flex-shrink: 0; background: rgba(255, 255, 255, 0.06);
   }
   .result-info { flex: 1; min-width: 0; }
-  .result-name {
-    font-weight: 700; font-size: 1.1em; margin-bottom: 3px;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-  }
-  .result-role { font-size: 0.82em; font-weight: 600; letter-spacing: 0.5px; }
+  .result-name { font-weight: 700; font-size: 1.05em; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .result-role { font-size: 0.8em; font-weight: 600; letter-spacing: 0.5px; }
   .role-citizen .result-role { color: #64b5f6; }
   .role-doctor .result-role { color: #66bb6a; }
   .role-detective .result-role { color: #ba68c8; }
   .role-mafia .result-role { color: #ff7088; }
+  .role-spy .result-role { color: #ba68c8; }
+  .role-location .result-role { color: #64b5f6; }
 
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-15px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes revealCard {
-    from { opacity: 0; transform: translateY(15px) scale(0.97); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
+  @keyframes revealCard { from { opacity: 0; transform: translateY(15px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
   .hidden { display: none !important; }
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <h1>🎭 МАФИЯ</h1>
-    <p class="subtitle">Тайные роли · до 6 участников</p>
+    <h1 id="mainTitle">🎭 МАФИЯ & ШПИОН</h1>
+    <p class="subtitle" id="mainSubtitle">Выберите режим игры</p>
   </header>
 
-  <!-- ЭКРАН 1: Настройка -->
-  <div class="card" id="setupCard">
-    <div class="section-title"><span class="icon">👑</span> Ведущий</div>
-    <p class="hint">Ведущий не играет и не получает роль. Впишите его имя отдельно.</p>
-    <div class="input-row">
-      <input type="text" id="hostInput" placeholder="Имя ведущего..." maxlength="20">
+  <!-- ================= ГЛАВНЫЙ ЭКРАН (ВЫБОР РЕЖИМА) ================= -->
+  <div class="card" id="mainCard">
+    <div class="mode-selector">
+      <button class="mode-btn active" id="modeMafiaBtn" onclick="switchMode('mafia')">
+        <span class="emoji">🎭</span> Мафия
+      </button>
+      <button class="mode-btn" id="modeSpyBtn" onclick="switchMode('spy')">
+        <span class="emoji">🕵️</span> Шпион
+      </button>
+    </div>
+    <div class="actions-row">
+      <button class="btn btn-primary" onclick="startSetup()">Перейти к настройке</button>
+    </div>
+  </div>
+
+  <!-- ================= ЭКРАН НАСТРОЙКИ ================= -->
+  <div class="card hidden" id="setupCard">
+    <div class="section-title"><span class="icon" id="setupIcon">👑</span> <span id="setupTitle">Настройка</span></div>
+    
+    <div id="mafiaSetupFields">
+      <p class="hint">Ведущий не играет и не получает роль. Впишите его имя отдельно.</p>
+      <div class="input-row">
+        <input type="text" id="hostInput" placeholder="Имя ведущего..." maxlength="20">
+      </div>
+      <div class="section-title" style="margin-top: 20px;">
+        <span class="icon">👥</span> Игроки <span class="count-badge" id="playerCount">0 / 5</span>
+      </div>
+      <p class="hint">От 2 до 5 игроков. Каждый по очереди скрытно вскроет свою роль.</p>
     </div>
 
-    <div class="section-title" style="margin-top: 22px;">
-      <span class="icon">👥</span> Игроки
-      <span class="count-badge" id="playerCount">0 / 5</span>
+    <div id="spySetupFields" class="hidden">
+      <p class="hint">Игра без ведущего. Все игроки получают карточки: кто-то локацию, а кто-то роль шпиона. Один телефон передается по кругу.</p>
+      <div class="section-title" style="margin-top: 10px;">
+        <span class="icon">👥</span> Игроки <span class="count-badge" id="spyPlayerCount">0 / 10</span>
+      </div>
+      <p class="hint">От 3 до 10 игроков. Шпионов будет 1 (до 6 игроков) или 2 (от 7 игроков).</p>
+      
+      <div class="input-row" style="margin-top: 15px;">
+        <span style="align-self: center; color: #a89bb8; font-size: 0.9em; width: 100px;">Таймер:</span>
+        <select id="spyTimerSelect">
+          <option value="60">1 минута</option>
+          <option value="120" selected>2 минуты</option>
+          <option value="180">3 минуты</option>
+          <option value="300">5 минут</option>
+        </select>
+      </div>
     </div>
-    <p class="hint">Добавьте от 2 до 5 игроков. После распределения каждый по очереди скрытно вскроет свою роль.</p>
-    <div class="input-row">
+
+    <div class="input-row" style="margin-top: 10px;">
       <input type="text" id="playerInput" placeholder="Имя игрока..." maxlength="20">
       <button class="btn btn-primary" id="addPlayerBtn">Добавить</button>
     </div>
 
     <div id="playersList"></div>
 
-    <div id="compositionBox" class="hidden">
-      <div class="composition-box">
-        <div class="comp-title">📋 Состав раунда</div>
-        <div class="comp-chips" id="compChips"></div>
-      </div>
-    </div>
-
-    <div class="section-title" style="margin-top: 22px;"><span class="icon">🎲</span> Возможные роли</div>
-    <div class="roles-info" id="rolesInfo"></div>
-
-    <div class="actions-row" style="margin-top: 24px;">
-      <button class="btn btn-primary" id="distributeBtn" disabled>🎲 Распределить роли</button>
-      <button class="btn btn-ghost" id="resetBtn">🗑️ Сбросить</button>
+    <div class="actions-row" style="margin-top: 20px;">
+      <button class="btn btn-primary" id="startGameBtn" disabled>Начать игру</button>
+      <button class="btn btn-ghost" onclick="goHome()">Назад</button>
     </div>
   </div>
 
-  <!-- ЭКРАН 2: Поочерёдное вскрытие -->
+  <!-- ================= ЭКРАН ВСКРЫТИЯ (ОБЩИЙ ДЛЯ МАФИИ И ШПИОНА) ================= -->
   <div class="card hidden" id="revealCard">
     <div class="reveal-stage">
       <div class="reveal-progress" id="revealProgress"></div>
@@ -499,109 +343,202 @@
     </div>
   </div>
 
-  <!-- ЭКРАН 3: Передача устройства ведущему -->
+  <!-- ================= ЭКРАН ПЕРЕДАЧИ ВЕДУЩЕМУ (ТОЛЬКО МАФИЯ) ================= -->
   <div class="card hidden" id="passCard">
-    <div class="pass-stage">
+    <div class="reveal-stage">
       <div class="pass-icon">👑</div>
       <div class="pass-title">Все игроки увидели свои роли</div>
       <div class="pass-text">
         Убедитесь, что <strong>все игроки уже посмотрели свои роли</strong> и устройство
         находится у ведущего. Только после этого открывайте панель с ролями.
       </div>
-      
       <button class="btn host-open-btn" id="openHostBtn">👑 Передать устройство ведущему</button>
-      
       <div class="warning-note">
         ⚠️ Нажмите эту кнопку <strong>только когда устройство у ведущего</strong>.
-        После нажатия откроется список: кто есть кто.
       </div>
     </div>
   </div>
 
-  <!-- ЭКРАН 4: Панель ведущего -->
+  <!-- ================= ПАНЕЛЬ ВЕДУЩЕГО (ТОЛЬКО МАФИЯ) ================= -->
   <div class="card hidden" id="hostCard">
     <div class="host-panel-warning">
-      👑 <strong>Панель ведущего</strong><br>
-      Не показывайте этот экран игрокам.
+      👑 <strong>Панель ведущего</strong><br> Не показывайте этот экран игрокам.
     </div>
     <div class="section-title"><span class="icon">📜</span> Кто есть кто</div>
     <div class="results-grid" id="hostResults"></div>
-    <div class="actions-row" style="margin-top: 22px;">
-      <button class="btn btn-primary" id="againBtn">🔄 Новые роли</button>
-      <button class="btn btn-ghost" id="newGameBtn">👥 Новая игра</button>
+    <div class="actions-row" style="margin-top: 20px;">
+      <button class="btn btn-primary" onclick="startGame()">🔄 Новые роли</button>
+      <button class="btn btn-ghost" onclick="goHome()">👥 Новая игра</button>
+    </div>
+  </div>
+
+  <!-- ================= ЭКРАН ТАЙМЕРА / ГОЛОСОВАНИЯ (ТОЛЬКО ШПИОН) ================= -->
+  <div class="card hidden" id="timerCard">
+    <div style="text-align: center; padding: 10px 0;">
+      <div class="pass-title" style="margin-bottom: 20px;">Обсуждение</div>
+      
+      <div class="timer-circle" id="timerCircle">
+        <div class="timer-inner" id="timerText">02:00</div>
+      </div>
+
+      <div class="location-display hidden" id="locationDisplay" style="color: #ff6ec7; font-size: 1.2em; margin-bottom: 20px;">Локация: <span id="locationName"></span></div>
+
+      <div id="timeUpMsg" class="hidden" style="margin-bottom: 20px; padding: 15px; background: rgba(255,80,100,0.1); border: 1px solid rgba(255,80,100,0.3); border-radius: 12px;">
+        <div style="font-size: 1.2em; color: #ff7088; font-weight: bold; margin-bottom: 5px;">⏰ Время вышло!</div>
+        <div style="color: #a89bb8; font-size: 0.9em; line-height: 1.4;">
+          Шпион не раскрыт. Голосуйте и пытайтесь вычислить его самостоятельно. Если хотите сыграть еще раз с новой локацией — нажмите кнопку ниже.
+        </div>
+      </div>
+
+      <div class="actions-row" style="margin-top: 20px; flex-direction: column;">
+        <button class="btn btn-primary btn-large hidden" id="restartSpyBtn" onclick="startGame()">🔄 Играть новый раунд</button>
+        <button class="btn btn-ghost btn-large" onclick="goHome()" style="margin-top: 10px;">🏠 В главное меню</button>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-// ===== Состояние =====
+// ================= СОСТОЯНИЕ =================
 const state = {
+  mode: 'mafia', // 'mafia' | 'spy'
   host: '',
   players: [],
   assignments: null,
   revealIndex: 0,
-  flipped: false
+  flipped: false,
+  timerInterval: null,
+  spyTimerSeconds: 120,
+  currentLocation: '',
+  spyLocationsUsed: [], // чтобы не повторялись
 };
 
-const MAX_PLAYERS = 5;
-const MIN_PLAYERS = 2;
+const MAX_MAFIA_PLAYERS = 5;
+const MIN_MAFIA_PLAYERS = 2;
+const MAX_SPY_PLAYERS = 10;
+const MIN_SPY_PLAYERS = 3;
 
-const ROLES = {
-  mafia: {
-    key: 'mafia', name: 'МАФИЯ', emoji: '🔫', cls: 'role-mafia', chip: 'mafia',
-    front: 'front-mafia', team: 'КОМАНДА МАФИИ',
-    desc: 'Ночью выбираешь жертву. Днём притворяйся мирным и не дай себя вычислить.'
-  },
-  citizen: {
-    key: 'citizen', name: 'МИРНЫЙ ЖИТЕЛЬ', emoji: '👤', cls: 'role-citizen', chip: 'citizen',
-    front: 'front-citizen', team: 'КОМАНДА ГОРОДА',
-    desc: 'Днём голосуй и вычисляй мафию. Твоя сила — логика и слово.'
-  },
-  doctor: {
-    key: 'doctor', name: 'ДОКТОР', emoji: '🩺', cls: 'role-doctor', chip: 'doctor',
-    front: 'front-doctor', team: 'КОМАНДА ГОРОДА',
-    desc: 'Каждую ночь спасаешь одного игрока от выстрела мафии.'
-  },
-  detective: {
-    key: 'detective', name: 'СЫЩИК', emoji: '🔍', cls: 'role-detective', chip: 'detective',
-    front: 'front-detective', team: 'КОМАНДА ГОРОДА',
-    desc: 'Каждую ночь проверяешь одного игрока и узнаёшь, мафия он или нет.'
-  }
+// Список локаций для шпиона
+const LOCATIONS = [
+  "🌴 Тропический остров", "🚀 Космическая станция", "🏰 Средневековый замок", "🎢 Парк развлечений",
+  "🏥 Больница", "🏫 Школа", "🍕 Пиццерия", "🎬 Съемочная площадка", "🏦 Банк", "🚓 Полицейский участок",
+  "🐘 Зоопарк", "✈️ Аэропорт", "🚢 Круизный лайнер", "⛽ Заправочная станция", "🏖️ Пляж",
+  "🎳 Боулинг", "🎤 Концертный зал", "🧖‍♀️ Спа-салон", "🏋️‍♂️ Спортзал", "📚 Библиотека",
+  "🍔 Ресторан быстрого питания", "🏕️ Кемпинг в лесу", "🎡 Цирк", "🏭 Заброшенный завод",
+  "🕵️‍♂️ Секретная лаборатория", "🎰 Казино", "🍺 Пивоварня", "🧁 Кондитерская фабрика",
+  "🚁 Вертолетная площадка", "🌋 Вулкан", "🐧 Антарктическая станция", "🌵 Пустыня",
+  "🏯 Японский храм", "🗽 Статуя Свободы", "🏟️ Футбольный стадион", "🚇 Метро",
+  "🐄 Молочная ферма", "☢️ Заброшенная АЭС", "🏥 Стоматология", "🛠️ Автомастерская",
+  "🌭 Уличный киоск с хот-догами", "🛸 НЛО", "🏝️ Нудистский пляж", "🤡 Детский утренник",
+  "🧙‍♂️ Магическая академия", "🏴‍☠️ Пиратский корабль", "🛏️ Общежитие", "🎢 Аттракцион ужасов",
+  "🐊 Болото с аллигаторами", "🕍 Древний монастырь", "🚂 Ночной поезд"
+];
+
+// Роли для мафии
+const MAFIA_ROLES = {
+  mafia: { key: 'mafia', name: 'МАФИЯ', emoji: '🔫', cls: 'role-mafia', front: 'front-mafia', team: 'КОМАНДА МАФИИ', desc: 'Ночью выбираешь жертву. Днём притворяйся мирным.' },
+  citizen: { key: 'citizen', name: 'МИРНЫЙ', emoji: '👤', cls: 'role-citizen', front: 'front-citizen', team: 'КОМАНДА ГОРОДА', desc: 'Днём голосуй и вычисляй мафию.' },
+  doctor: { key: 'doctor', name: 'ДОКТОР', emoji: '🩺', cls: 'role-doctor', front: 'front-doctor', team: 'КОМАНДА ГОРОДА', desc: 'Каждую ночь спасаешь одного игрока.' },
+  detective: { key: 'detective', name: 'СЫЩИК', emoji: '🔍', cls: 'role-detective', front: 'front-detective', team: 'КОМАНДА ГОРОДА', desc: 'Каждую ночь проверяешь одного игрока.' }
 };
 
-const ROLE_LIST = [ROLES.mafia, ROLES.citizen, ROLES.doctor, ROLES.detective];
+// Роли для шпиона
+const SPY_ROLES = {
+  spy: { key: 'spy', name: 'ВЫ ШПИОН!', emoji: '🕵️', cls: 'role-spy', front: 'front-spy', team: 'ВАША ЦЕЛЬ: УГАДАТЬ ЛОКАЦИЮ', desc: 'Вы не знаете локацию. Слушайте других, задавайте вопросы и попытайтесь понять, где вы находитесь.' },
+  location: { key: 'location', name: 'ВЫ ЗНАЕТЕ ЛОКАЦИЮ', emoji: '📍', cls: 'role-location', front: 'front-location', team: 'ВАША ЦЕЛЬ: НАЙТИ ШПИОНА', desc: 'Задавайте вопросы про локацию так, чтобы шпион не понял, где вы. Вычислите, кто не знает локацию.' }
+};
 
 const $ = id => document.getElementById(id);
 
-function getRolesForCount(n) {
-  switch (n) {
-    case 2: return ['mafia', 'citizen'];
-    case 3: return ['mafia', 'doctor', 'detective'];
-    case 4: return ['mafia', 'doctor', 'detective', 'citizen'];
-    case 5: return ['mafia', 'doctor', 'detective', 'citizen', 'citizen'];
-    default: return [];
+// ================= УТИЛИТЫ =================
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function escapeHtml(s) {
+  const d = document.createElement('div'); d.textContent = s; return d.innerHTML;
+}
+
+// ================= НАВИГАЦИЯ =================
+function switchMode(mode) {
+  state.mode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  if (mode === 'mafia') {
+    $('modeMafiaBtn').classList.add('active');
+    $('mainTitle').textContent = '🎭 МАФИЯ';
+    $('mainSubtitle').textContent = 'Тайные роли · до 6 участников';
+  } else {
+    $('modeSpyBtn').classList.add('active');
+    $('mainTitle').textContent = '🕵️ ШПИОН';
+    $('mainSubtitle').textContent = 'Найдите шпиона · до 10 участников';
   }
 }
 
-// ===== Ввод ведущего =====
-$('hostInput').addEventListener('input', e => {
-  state.host = e.target.value.trim();
-  updateSetupUI();
-});
+function startSetup() {
+  showScreen('setupCard');
+  if (state.mode === 'mafia') {
+    $('setupIcon').textContent = '👑';
+    $('setupTitle').textContent = 'Настройка Мафии';
+    $('mafiaSetupFields').classList.remove('hidden');
+    $('spySetupFields').classList.add('hidden');
+  } else {
+    $('setupIcon').textContent = '🕵️';
+    $('setupTitle').textContent = 'Настройка Шпиона';
+    $('mafiaSetupFields').classList.add('hidden');
+    $('spySetupFields').classList.remove('hidden');
+    $('spyTimerSelect').value = '120';
+    state.spyTimerSeconds = 120;
+  }
+  resetSetupForm();
+}
 
-// ===== Игроки =====
-$('playerInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') addPlayer();
-});
+function goHome() {
+  clearInterval(state.timerInterval);
+  showScreen('mainCard');
+  $('mainTitle').textContent = '🎭 МАФИЯ & ШПИОН';
+  $('mainSubtitle').textContent = 'Выберите режим игры';
+  resetSetupForm();
+}
+
+function resetSetupForm() {
+  state.host = '';
+  state.players = [];
+  state.assignments = null;
+  state.revealIndex = 0;
+  state.flipped = false;
+  $('hostInput').value = '';
+  $('playerInput').value = '';
+  updateSetupUI();
+}
+
+function showScreen(id) {
+  ['mainCard', 'setupCard', 'revealCard', 'passCard', 'hostCard', 'timerCard'].forEach(x => {
+    $(x).classList.toggle('hidden', x !== id);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ================= НАСТРОЙКА ИГРОКОВ =================
+$('hostInput').addEventListener('input', e => { state.host = e.target.value.trim(); updateSetupUI(); });
+$('spyTimerSelect').addEventListener('change', e => { state.spyTimerSeconds = parseInt(e.target.value); });
+
+$('playerInput').addEventListener('keydown', e => { if (e.key === 'Enter') addPlayer(); });
 $('addPlayerBtn').addEventListener('click', addPlayer);
 
 function addPlayer() {
   const input = $('playerInput');
   const name = input.value.trim();
   if (!name) return;
-  if (state.players.length >= MAX_PLAYERS) return;
+  const max = state.mode === 'mafia' ? MAX_MAFIA_PLAYERS : MAX_SPY_PLAYERS;
+  if (state.players.length >= max) return;
   if (state.players.some(p => p.toLowerCase() === name.toLowerCase())) {
-    shakeInput(input);
+    input.style.transform = 'translateX(-6px)';
+    setTimeout(() => input.style.transform = 'translateX(6px)', 100);
+    setTimeout(() => input.style.transform = 'translateX(0)', 200);
     return;
   }
   state.players.push(name);
@@ -615,27 +552,21 @@ function removePlayer(index) {
   updateSetupUI();
 }
 
-function shakeInput(input) {
-  input.style.transition = 'transform 0.1s';
-  input.style.transform = 'translateX(-6px)';
-  setTimeout(() => input.style.transform = 'translateX(6px)', 100);
-  setTimeout(() => input.style.transform = 'translateX(0)', 200);
-}
-
-function escapeHtml(s) {
-  const d = document.createElement('div');
-  d.textContent = s;
-  return d.innerHTML;
-}
-
-// ===== Обновление экрана настройки =====
 function updateSetupUI() {
   const count = state.players.length;
-  $('playerCount').textContent = `${count} / ${MAX_PLAYERS}`;
+  const isMafia = state.mode === 'mafia';
+  const max = isMafia ? MAX_MAFIA_PLAYERS : MAX_SPY_PLAYERS;
+  const min = isMafia ? MIN_MAFIA_PLAYERS : MIN_SPY_PLAYERS;
+
+  if (isMafia) {
+    $('playerCount').textContent = `${count} / ${max}`;
+  } else {
+    $('spyPlayerCount').textContent = `${count} / ${max}`;
+  }
 
   const list = $('playersList');
   if (count === 0) {
-    list.innerHTML = '<div class="empty-state">Пока нет игроков. Добавьте первого 👇</div>';
+    list.innerHTML = '<div class="empty-state" style="text-align:center;padding:20px;color:#6a5a7a;font-style:italic;">Пока нет игроков. Добавьте первого 👇</div>';
   } else {
     list.innerHTML = state.players.map((p, i) => `
       <div class="player-item">
@@ -646,61 +577,47 @@ function updateSetupUI() {
     `).join('');
   }
 
-  const canAdd = count < MAX_PLAYERS;
+  const canAdd = count < max;
   $('playerInput').disabled = !canAdd;
   $('addPlayerBtn').disabled = !canAdd;
   $('playerInput').parentElement.style.opacity = canAdd ? '1' : '0.5';
 
-  if (count >= MIN_PLAYERS) {
-    $('compositionBox').classList.remove('hidden');
-    const keys = getRolesForCount(count);
-    const counts = {};
-    keys.forEach(k => counts[k] = (counts[k] || 0) + 1);
-    $('compChips').innerHTML = ROLE_LIST
-      .filter(r => counts[r.key])
-      .map(r => `<span class="comp-chip ${r.chip}">${r.emoji} ${r.name} × ${counts[r.key]}</span>`)
-      .join('');
+  // Проверка на старт
+  if (isMafia) {
+    $('startGameBtn').disabled = !(state.host && count >= min && count <= max);
   } else {
-    $('compositionBox').classList.add('hidden');
+    $('startGameBtn').disabled = !(count >= min && count <= max);
   }
-
-  const keys = count >= MIN_PLAYERS ? getRolesForCount(count) : [];
-  const counts = {};
-  keys.forEach(k => counts[k] = (counts[k] || 0) + 1);
-  $('rolesInfo').innerHTML = ROLE_LIST.map(r => {
-    const c = counts[r.key] || 0;
-    return `
-      <div class="role-info-item" style="${c ? '' : 'opacity:0.5'}">
-        ${c ? `<div class="rcount">×${c}</div>` : ''}
-        <span class="emoji">${r.emoji}</span>
-        <div class="rname">${r.name}</div>
-        <div class="rdesc">${r.desc.split('.')[0]}</div>
-      </div>`;
-  }).join('');
-
-  $('distributeBtn').disabled = !(state.host && count >= MIN_PLAYERS && count <= MAX_PLAYERS);
 }
 
-// ===== Перемешивание =====
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+// ================= СТАРТ ИГРЫ =================
+$('startGameBtn').addEventListener('click', startGame);
+
+function startGame() {
+  if (state.mode === 'mafia') {
+    startMafia();
+  } else {
+    startSpy();
   }
-  return a;
 }
 
-// ===== Старт распределения =====
-$('distributeBtn').addEventListener('click', startDistribution);
-$('againBtn').addEventListener('click', startDistribution);
+// ================= МАФИЯ =================
+function getMafiaRolesForCount(n) {
+  switch (n) {
+    case 2: return ['mafia', 'citizen'];
+    case 3: return ['mafia', 'doctor', 'detective'];
+    case 4: return ['mafia', 'doctor', 'detective', 'citizen'];
+    case 5: return ['mafia', 'doctor', 'detective', 'citizen', 'citizen'];
+    default: return [];
+  }
+}
 
-function startDistribution() {
+function startMafia() {
   const n = state.players.length;
-  if (!state.host || n < MIN_PLAYERS || n > MAX_PLAYERS) return;
+  if (!state.host || n < MIN_MAFIA_PLAYERS || n > MAX_MAFIA_PLAYERS) return;
 
-  const roleKeys = getRolesForCount(n);
-  const shuffledRoles = shuffle(roleKeys.map(k => ROLES[k]));
+  const roleKeys = getMafiaRolesForCount(n);
+  const shuffledRoles = shuffle(roleKeys.map(k => MAFIA_ROLES[k]));
   const shuffledPlayers = shuffle([...state.players]);
 
   state.assignments = shuffledPlayers.map((name, i) => ({
@@ -712,10 +629,45 @@ function startDistribution() {
 
   showScreen('revealCard');
   renderReveal();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ===== Экран вскрытия =====
+// ================= ШПИОН =================
+function startSpy() {
+  const n = state.players.length;
+  if (n < MIN_SPY_PLAYERS || n > MAX_SPY_PLAYERS) return;
+
+  // Выбор локации (не повторяем пока не кончатся)
+  if (state.spyLocationsUsed.length === 0 || state.spyLocationsUsed.length >= LOCATIONS.length) {
+    state.spyLocationsUsed = shuffle([...LOCATIONS]);
+  }
+  state.currentLocation = state.spyLocationsUsed.pop();
+
+  // Логика шпионов
+  const spyCount = n >= 7 ? 2 : 1;
+  const rolesArr = [];
+  for (let i = 0; i < spyCount; i++) rolesArr.push('spy');
+  for (let i = 0; i < n - spyCount; i++) rolesArr.push('location');
+
+  const shuffledRoles = shuffle(rolesArr);
+  const shuffledPlayers = shuffle([...state.players]);
+
+  state.assignments = shuffledPlayers.map((name, i) => ({
+    name,
+    roleKey: shuffledRoles[i],
+    // Для шпиона роль одна, для локации подставляем название
+    role: shuffledRoles[i] === 'spy' 
+      ? { ...SPY_ROLES.spy } 
+      : { ...SPY_ROLES.location, name: state.currentLocation, desc: 'Локация: ' + state.currentLocation + '. Задавайте вопросы, чтобы вычислить шпиона.' }
+  }));
+
+  state.revealIndex = 0;
+  state.flipped = false;
+
+  showScreen('revealCard');
+  renderReveal();
+}
+
+// ================= РЕНДЕР ВСКРЫТИЯ =================
 function renderReveal() {
   const idx = state.revealIndex;
   const total = state.assignments.length;
@@ -753,7 +705,7 @@ function flipCard() {
   state.flipped = true;
   $('flipCard').classList.add('flipped');
   $('revealInstruction').textContent =
-    'Запомните роль. Затем нажмите кнопку, чтобы скрыть карточку и передать дальше.';
+    'Запомните информацию. Затем нажмите кнопку, чтобы скрыть карточку.';
   setTimeout(() => { $('nextPlayerBtn').disabled = false; }, 500);
 }
 
@@ -762,20 +714,20 @@ $('nextPlayerBtn').addEventListener('click', () => {
   setTimeout(() => {
     state.revealIndex++;
     if (state.revealIndex >= state.assignments.length) {
-      showScreen('passCard');
+      if (state.mode === 'mafia') {
+        showScreen('passCard');
+      } else {
+        // Для шпиона запускаем таймер
+        startSpyTimer();
+      }
     } else {
       renderReveal();
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, 400);
 });
 
-// ===== Передача ведущему =====
+// ================= ПЕРЕДАЧА ВЕДУЩЕМУ (МАФИЯ) =================
 $('openHostBtn').addEventListener('click', () => {
-  showHostPanel();
-});
-
-function showHostPanel() {
   $('hostResults').innerHTML = state.assignments.map((a, i) => `
     <div class="result-card ${a.role.cls}" style="animation-delay: ${i * 0.08}s">
       <div class="result-avatar">${a.role.emoji}</div>
@@ -786,34 +738,56 @@ function showHostPanel() {
     </div>
   `).join('');
   showScreen('hostCard');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ================= ТАЙМЕР И ГОЛОСОВАНИЕ (ШПИОН) =================
+function startSpyTimer() {
+  showScreen('timerCard');
+  $('timeUpMsg').classList.add('hidden');
+  $('restartSpyBtn').classList.add('hidden');
+  $('locationDisplay').classList.add('hidden');
+  
+  const total = state.spyTimerSeconds;
+  let left = total;
+  const timerCircle = $('timerCircle');
+  const timerText = $('timerText');
+
+  function updateTimer() {
+    const mins = Math.floor(left / 60);
+    const secs = left % 60;
+    timerText.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    
+    const percent = (1 - left / total) * 100;
+    timerCircle.style.background = `conic-gradient(${left <= 10 ? '#ff4444' : '#ff6ec7'} ${percent}%, rgba(255,255,255,0.1) ${percent}%)`;
+    
+    if (left <= 10) {
+      timerCircle.classList.add('warning');
+    } else {
+      timerCircle.classList.remove('warning');
+    }
+
+    if (left <= 0) {
+      clearInterval(state.timerInterval);
+      timeIsUp();
+    }
+    left--;
+  }
+
+  clearInterval(state.timerInterval);
+  updateTimer();
+  state.timerInterval = setInterval(updateTimer, 1000);
 }
 
-// ===== Переключение экранов =====
-function showScreen(id) {
-  ['setupCard', 'revealCard', 'passCard', 'hostCard'].forEach(x => {
-    $(x).classList.toggle('hidden', x !== id);
-  });
+function timeIsUp() {
+  $('timerCircle').classList.add('warning');
+  $('timerText').textContent = '00:00';
+  $('timeUpMsg').classList.remove('hidden');
+  $('restartSpyBtn').classList.remove('hidden');
+  $('locationDisplay').classList.remove('hidden');
+  $('locationName').textContent = state.currentLocation;
 }
 
-// ===== Сброс =====
-$('resetBtn').addEventListener('click', resetAll);
-$('newGameBtn').addEventListener('click', resetAll);
-
-function resetAll() {
-  state.host = '';
-  state.players = [];
-  state.assignments = null;
-  state.revealIndex = 0;
-  state.flipped = false;
-  $('hostInput').value = '';
-  $('playerInput').value = '';
-  showScreen('setupCard');
-  updateSetupUI();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-// Инициализация
+// Инициализация при загрузке
 updateSetupUI();
 </script>
 </body>
