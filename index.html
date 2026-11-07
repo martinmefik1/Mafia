@@ -15,7 +15,7 @@
     justify-content: center;
     align-items: flex-start;
     color: #e8e0f0;
-    padding: 20px 16px;
+    padding: 16px 12px; /* Уменьшены отступы для мобилок */
     position: relative;
   }
   body::before {
@@ -26,60 +26,64 @@
       radial-gradient(circle at 80% 70%, rgba(255, 100, 150, 0.08) 0%, transparent 40%);
     pointer-events: none; z-index: 0;
   }
-  .container { max-width: 820px; width: 100%; position: relative; z-index: 1; }
-  header { text-align: center; margin-bottom: 24px; }
+  .container { max-width: 600px; width: 100%; position: relative; z-index: 1; } /* Сужен для мобилок */
+  header { text-align: center; margin-bottom: 20px; }
   h1 {
-    font-size: 2.2em;
+    font-size: 2em;
     background: linear-gradient(135deg, #ff6ec7, #b06ab3, #4568dc);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    margin-bottom: 8px; letter-spacing: 2px;
+    margin-bottom: 6px; letter-spacing: 1.5px;
     filter: drop-shadow(0 0 20px rgba(255, 110, 199, 0.4));
   }
-  .subtitle { color: #a89bb8; font-size: 0.92em; letter-spacing: 1px; }
+  .subtitle { color: #a89bb8; font-size: 0.85em; letter-spacing: 1px; }
   .card {
     background: linear-gradient(145deg, rgba(40, 25, 60, 0.92), rgba(25, 15, 40, 0.92));
-    border-radius: 20px; padding: 24px 20px; margin-bottom: 20px;
+    border-radius: 20px; padding: 20px 16px; margin-bottom: 16px;
     border: 1px solid rgba(176, 106, 179, 0.25);
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
     backdrop-filter: blur(10px); width: 100%;
   }
   .section-title {
-    font-size: 1.1em; margin-bottom: 14px; color: #ff6ec7;
-    display: flex; align-items: center; gap: 10px; font-weight: 600;
+    font-size: 1.05em; margin-bottom: 12px; color: #ff6ec7;
+    display: flex; align-items: center; gap: 8px; font-weight: 600;
   }
-  .section-title .icon { font-size: 1.3em; }
-  .hint { font-size: 0.82em; color: #8a7a9a; margin-bottom: 14px; line-height: 1.5; }
+  .section-title .icon { font-size: 1.2em; }
+  .hint { font-size: 0.8em; color: #8a7a9a; margin-bottom: 12px; line-height: 1.4; }
   
   /* Mode selector */
-  .mode-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+  .mode-selector { display: flex; gap: 8px; margin-bottom: 16px; }
   .mode-btn {
-    flex: 1; padding: 15px 10px; border-radius: 14px; border: 2px solid rgba(255,255,255,0.1);
-    background: rgba(255,255,255,0.03); color: #a89bb8; font-weight: 700; font-size: 1em;
-    cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 5px;
+    flex: 1; padding: 12px 8px; border-radius: 12px; border: 2px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.03); color: #a89bb8; font-weight: 700; font-size: 0.95em;
+    cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px;
   }
   .mode-btn.active {
     background: linear-gradient(135deg, rgba(255, 110, 199, 0.2), rgba(176, 106, 179, 0.2));
     border-color: #ff6ec7; color: #fff; box-shadow: 0 5px 20px rgba(255, 110, 199, 0.2);
   }
-  .mode-btn span.emoji { font-size: 1.5em; }
+  .mode-btn span.emoji { font-size: 1.4em; }
 
-  .input-row { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; }
-  input[type="text"], select {
-    flex: 1; padding: 13px 16px; background: rgba(10, 5, 20, 0.7);
-    border: 1.5px solid rgba(176, 106, 179, 0.3); border-radius: 12px;
+  .input-row { display: flex; gap: 8px; margin-bottom: 12px; width: 100%; align-items: center; flex-wrap: wrap; }
+  .input-group { display: flex; flex-direction: column; gap: 6px; flex: 1; min-width: 120px; margin-bottom: 8px; }
+  .input-group label { font-size: 0.8em; color: #a89bb8; margin-left: 4px; }
+  
+  input[type="text"], input[type="number"], select {
+    flex: 1; padding: 12px 14px; background: rgba(10, 5, 20, 0.7);
+    border: 1.5px solid rgba(176, 106, 179, 0.3); border-radius: 10px;
     color: #e8e0f0; font-size: 1em; font-family: inherit; outline: none; min-width: 0;
+    width: 100%;
   }
-  input[type="text"]:focus, select:focus { border-color: #ff6ec7; box-shadow: 0 0 0 3px rgba(255, 110, 199, 0.15); }
+  input:focus, select:focus { border-color: #ff6ec7; box-shadow: 0 0 0 3px rgba(255, 110, 199, 0.15); }
   select option { background: #1a1028; color: #fff; }
 
   .btn {
-    padding: 13px 22px; border: none; border-radius: 12px; cursor: pointer;
-    font-weight: 600; font-size: 1em; font-family: inherit; transition: all 0.25s;
+    padding: 12px 18px; border: none; border-radius: 10px; cursor: pointer;
+    font-weight: 600; font-size: 0.95em; font-family: inherit; transition: all 0.25s;
     letter-spacing: 0.5px; text-align: center;
   }
   .btn-primary {
     background: linear-gradient(135deg, #ff6ec7, #b06ab3); color: white;
-    box-shadow: 0 5px 20px rgba(255, 110, 199, 0.35);
+    box-shadow: 0 4px 15px rgba(255, 110, 199, 0.35);
   }
   .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
   .btn-ghost {
@@ -87,41 +91,44 @@
   }
   .btn-danger {
     background: rgba(255, 80, 100, 0.15); color: #ff7088;
-    border: 1px solid rgba(255, 80, 100, 0.35); padding: 8px 12px; font-size: 0.9em;
+    border: 1px solid rgba(255, 80, 100, 0.35); padding: 8px 12px; font-size: 0.85em;
   }
-  .btn-large { font-size: 1.1em; padding: 16px 20px; width: 100%; max-width: 400px; display: block; margin: 0 auto; white-space: normal; line-height: 1.3; }
+  .btn-large { font-size: 1.05em; padding: 15px 18px; width: 100%; display: block; margin: 0 auto; white-space: normal; line-height: 1.3; }
+  .btn-neutral {
+    background: rgba(255, 255, 255, 0.1); color: #e8e0f0; border: 1px solid rgba(255,255,255,0.2);
+  }
 
   .player-item {
-    display: flex; align-items: center; gap: 12px; padding: 10px 14px;
-    background: rgba(255, 255, 255, 0.03); border-radius: 12px; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.03); border-radius: 10px; margin-bottom: 8px;
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
   .player-number {
-    width: 30px; height: 30px; border-radius: 50%;
+    width: 28px; height: 28px; border-radius: 50%;
     background: linear-gradient(135deg, #b06ab3, #4568dc);
     display: flex; align-items: center; justify-content: center;
-    font-weight: 700; font-size: 0.85em; flex-shrink: 0;
+    font-weight: 700; font-size: 0.8em; flex-shrink: 0;
   }
-  .player-name-text { flex: 1; font-size: 1em; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .player-name-text { flex: 1; font-size: 0.95em; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   
-  .actions-row { display: flex; gap: 10px; flex-wrap: wrap; width: 100%; }
-  .actions-row .btn { flex: 1; min-width: 140px; }
+  .actions-row { display: flex; gap: 8px; flex-wrap: wrap; width: 100%; margin-top: 10px; }
+  .actions-row .btn { flex: 1; min-width: 120px; }
 
   /* ===== Экраны вскрытия ===== */
   .reveal-stage { text-align: center; padding: 10px 0; }
-  .reveal-progress { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; flex-wrap: wrap; }
+  .reveal-progress { display: flex; justify-content: center; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
   .reveal-dot {
-    width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    font-size: 0.8em; font-weight: 700; background: rgba(255,255,255,0.06);
+    width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 0.75em; font-weight: 700; background: rgba(255,255,255,0.06);
     border: 1.5px solid rgba(255,255,255,0.12); color: #8a7a9a; transition: all 0.3s;
   }
   .reveal-dot.done { background: linear-gradient(135deg, #66bb6a, #43a047); border-color: transparent; color: white; }
   .reveal-dot.current { background: linear-gradient(135deg, #ff6ec7, #b06ab3); border-color: transparent; color: white; box-shadow: 0 0 15px rgba(255,110,199,0.6); transform: scale(1.1); }
-  .reveal-name { font-size: 1.5em; font-weight: 700; margin-bottom: 6px; color: #fff; word-wrap: break-word; }
-  .reveal-instruction { color: #a89bb8; font-size: 0.9em; margin-bottom: 20px; line-height: 1.5; }
+  .reveal-name { font-size: 1.3em; font-weight: 700; margin-bottom: 6px; color: #fff; word-wrap: break-word; }
+  .reveal-instruction { color: #a89bb8; font-size: 0.85em; margin-bottom: 16px; line-height: 1.4; }
 
   .flip-card {
-    width: 100%; max-width: 280px; aspect-ratio: 3 / 4; margin: 0 auto 20px;
+    width: 100%; max-width: 240px; aspect-ratio: 3 / 4; margin: 0 auto 16px;
     perspective: 1200px; cursor: pointer;
   }
   .flip-inner {
@@ -130,39 +137,37 @@
   }
   .flip-card.flipped .flip-inner { transform: rotateY(180deg); }
   .flip-face {
-    position: absolute; inset: 0; backface-visibility: hidden; border-radius: 20px;
+    position: absolute; inset: 0; backface-visibility: hidden; border-radius: 16px;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 20px; overflow: hidden; text-align: center;
+    padding: 16px; overflow: hidden; text-align: center;
   }
   .flip-back {
     background: repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 10px, transparent 10px 20px), linear-gradient(145deg, #3a2555, #1e1230);
     border: 2px solid rgba(176, 106, 179, 0.5);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 40px rgba(176,106,179,0.15);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.6), inset 0 0 40px rgba(176,106,179,0.15);
   }
   .flip-back .qmark {
-    font-size: 5em; background: linear-gradient(135deg, #ff6ec7, #4568dc);
+    font-size: 4em; background: linear-gradient(135deg, #ff6ec7, #4568dc);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     filter: drop-shadow(0 0 25px rgba(255,110,199,0.5)); animation: pulse 2s infinite;
   }
-  .flip-back .tap-hint { margin-top: 18px; font-size: 0.9em; color: #b0a0c0; letter-spacing: 1px; }
+  .flip-back .tap-hint { margin-top: 12px; font-size: 0.8em; color: #b0a0c0; letter-spacing: 1px; }
   .flip-front {
-    transform: rotateY(180deg); border: 2px solid rgba(255,255,255,0.15); box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    transform: rotateY(180deg); border: 2px solid rgba(255,255,255,0.15); box-shadow: 0 15px 40px rgba(0,0,0,0.6);
   }
-  .flip-front .role-emoji { font-size: 4em; margin-bottom: 10px; }
-  .flip-front .role-name { font-size: 1.4em; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
-  .flip-front .role-desc { font-size: 0.85em; color: rgba(255,255,255,0.85); line-height: 1.5; padding: 0 10px; }
+  .flip-front .role-emoji { font-size: 3em; margin-bottom: 8px; }
+  .flip-front .role-name { font-size: 1.2em; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px; }
+  .flip-front .role-desc { font-size: 0.8em; color: rgba(255,255,255,0.85); line-height: 1.4; padding: 0 5px; }
   .flip-front .role-team {
-    margin-top: 15px; font-size: 0.75em; font-weight: 700; padding: 5px 14px; border-radius: 20px;
+    margin-top: 12px; font-size: 0.7em; font-weight: 700; padding: 4px 10px; border-radius: 20px;
     letter-spacing: 1px; background: rgba(255,255,255,0.2); color: #fff;
   }
   
-  /* Цвета мафии */
+  /* Цвета */
   .front-mafia { background: linear-gradient(145deg, #7a1f2e, #4a0f1a); }
   .front-citizen { background: linear-gradient(145deg, #1e4a7a, #0f2a4a); }
   .front-doctor { background: linear-gradient(145deg, #1f6b3a, #0f3a20); }
   .front-detective { background: linear-gradient(145deg, #5a2a7a, #2f0f4a); }
-  
-  /* Цвета шпиона */
   .front-spy { background: linear-gradient(145deg, #8a2be2, #4b0082); }
   .front-location { background: linear-gradient(145deg, #2e4a62, #1a2a3a); }
 
@@ -170,56 +175,55 @@
 
   /* ===== Экран таймера / голосования ===== */
   .timer-circle {
-    width: 160px; height: 160px; border-radius: 50%; margin: 0 auto 20px;
+    width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 16px;
     background: conic-gradient(#ff6ec7 0%, rgba(255,255,255,0.1) 0%);
     display: flex; align-items: center; justify-content: center;
     position: relative; box-shadow: 0 0 30px rgba(255,110,199,0.2);
+    transition: background 0.3s;
   }
   .timer-inner {
-    width: 140px; height: 140px; border-radius: 50%;
+    width: 130px; height: 130px; border-radius: 50%;
     background: #1e1230; display: flex; align-items: center; justify-content: center;
     font-size: 2.5em; font-weight: 800; color: #fff; font-variant-numeric: tabular-nums;
   }
   .timer-circle.warning { background: conic-gradient(#ff4444 0%, rgba(255,255,255,0.1) 0%); box-shadow: 0 0 30px rgba(255,68,68,0.4); }
   .timer-circle.warning .timer-inner { color: #ff7088; animation: pulse 1s infinite; }
   
-  .location-display {
-    font-size: 1.8em; font-weight: 800; color: #fff; margin-bottom: 10px;
-    text-shadow: 0 0 20px rgba(255,255,255,0.3);
-  }
+  .vote-timer .timer-inner { font-size: 2.2em; color: #ffd54f; }
+  .vote-timer { background: conic-gradient(#ffd54f 0%, rgba(255,255,255,0.1) 0%); box-shadow: 0 0 30px rgba(255, 213, 79, 0.2); }
 
   /* ===== Экран передачи ведущему ===== */
-  .pass-icon { font-size: 4em; margin-bottom: 16px; animation: pulse 2s infinite; display: inline-block; }
+  .pass-icon { font-size: 3.5em; margin-bottom: 12px; animation: pulse 2s infinite; display: inline-block; }
   .pass-title {
-    font-size: 1.5em; font-weight: 700; margin-bottom: 12px;
+    font-size: 1.3em; font-weight: 700; margin-bottom: 10px;
     background: linear-gradient(135deg, #ffd54f, #ff8a65);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1.3;
   }
-  .pass-text { color: #a89bb8; font-size: 0.95em; line-height: 1.6; max-width: 460px; margin: 0 auto 24px; }
+  .pass-text { color: #a89bb8; font-size: 0.85em; line-height: 1.5; max-width: 100%; margin: 0 auto 20px; }
   
   .host-open-btn {
-    font-size: 1.1em; padding: 16px 20px; background: linear-gradient(135deg, #ffd54f, #ff8a65);
-    color: #2a1a0a; box-shadow: 0 6px 24px rgba(255, 200, 80, 0.4);
-    width: 100%; max-width: 400px; display: block; margin: 0 auto; white-space: normal; line-height: 1.3;
+    font-size: 1em; padding: 14px 18px; background: linear-gradient(135deg, #ffd54f, #ff8a65);
+    color: #2a1a0a; box-shadow: 0 4px 20px rgba(255, 200, 80, 0.4);
+    width: 100%; display: block; margin: 0 auto; white-space: normal; line-height: 1.3;
   }
   .warning-note {
-    margin-top: 20px; padding: 12px 16px; background: rgba(255, 80, 100, 0.1);
-    border: 1px solid rgba(255, 80, 100, 0.3); border-radius: 12px; color: #ff9aab;
-    font-size: 0.82em; max-width: 460px; margin-left: auto; margin-right: auto; line-height: 1.5;
+    margin-top: 16px; padding: 10px 12px; background: rgba(255, 80, 100, 0.1);
+    border: 1px solid rgba(255, 80, 100, 0.3); border-radius: 10px; color: #ff9aab;
+    font-size: 0.75em; max-width: 100%; margin-left: auto; margin-right: auto; line-height: 1.4;
   }
 
   .host-panel-warning {
-    text-align: center; padding: 14px; background: rgba(255, 200, 80, 0.1);
-    border: 1px solid rgba(255, 200, 80, 0.35); border-radius: 14px;
-    margin-bottom: 18px; color: #ffd54f; font-size: 0.9em; line-height: 1.5;
+    text-align: center; padding: 12px; background: rgba(255, 200, 80, 0.1);
+    border: 1px solid rgba(255, 200, 80, 0.35); border-radius: 12px;
+    margin-bottom: 16px; color: #ffd54f; font-size: 0.85em; line-height: 1.4;
   }
-  .results-grid { display: grid; gap: 10px; }
+  .results-grid { display: grid; gap: 8px; }
   .result-card {
-    display: flex; align-items: center; gap: 14px; padding: 14px 16px;
-    border-radius: 14px; background: linear-gradient(135deg, rgba(40, 25, 60, 0.95), rgba(30, 18, 48, 0.95));
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+    border-radius: 12px; background: linear-gradient(135deg, rgba(40, 25, 60, 0.95), rgba(30, 18, 48, 0.95));
     border: 1px solid rgba(255, 255, 255, 0.08); animation: revealCard 0.5s backwards; position: relative; overflow: hidden;
   }
-  .result-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 5px; }
+  .result-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
   .result-card.role-citizen::before { background: linear-gradient(180deg, #64b5f6, #42a5f5); }
   .result-card.role-doctor::before { background: linear-gradient(180deg, #66bb6a, #43a047); }
   .result-card.role-detective::before { background: linear-gradient(180deg, #ba68c8, #9c27b0); }
@@ -228,18 +232,28 @@
   .result-card.role-location::before { background: linear-gradient(180deg, #64b5f6, #42a5f5); }
   
   .result-avatar {
-    width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    font-size: 1.4em; flex-shrink: 0; background: rgba(255, 255, 255, 0.06);
+    width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-size: 1.2em; flex-shrink: 0; background: rgba(255, 255, 255, 0.06);
   }
   .result-info { flex: 1; min-width: 0; }
-  .result-name { font-weight: 700; font-size: 1.05em; margin-bottom: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .result-role { font-size: 0.8em; font-weight: 600; letter-spacing: 0.5px; }
+  .result-name { font-weight: 700; font-size: 0.95em; margin-bottom: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .result-role { font-size: 0.75em; font-weight: 600; letter-spacing: 0.5px; }
   .role-citizen .result-role { color: #64b5f6; }
   .role-doctor .result-role { color: #66bb6a; }
   .role-detective .result-role { color: #ba68c8; }
   .role-mafia .result-role { color: #ff7088; }
   .role-spy .result-role { color: #ba68c8; }
   .role-location .result-role { color: #64b5f6; }
+
+  /* Экраны результатов (Победа / Продолжение) */
+  .result-screen {
+    text-align: center;
+    padding: 20px 5px;
+    animation: revealCard 0.5s;
+  }
+  .result-icon { font-size: 4em; margin-bottom: 12px; animation: pulse 2s infinite; }
+  .result-title { font-size: 1.5em; font-weight: 800; margin-bottom: 10px; line-height: 1.2; }
+  .result-text { font-size: 0.9em; color: #a89bb8; line-height: 1.5; margin-bottom: 20px; }
 
   @keyframes revealCard { from { opacity: 0; transform: translateY(15px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
   .hidden { display: none !important; }
@@ -262,8 +276,8 @@
         <span class="emoji">🕵️</span> Шпион
       </button>
     </div>
-    <div class="actions-row">
-      <button class="btn btn-primary" onclick="startSetup()">Перейти к настройке</button>
+    <div class="actions-row" style="justify-content: center;">
+      <button class="btn btn-primary btn-large" onclick="startSetup()" style="max-width: 300px;">Перейти к настройке</button>
     </div>
   </div>
 
@@ -276,44 +290,48 @@
       <div class="input-row">
         <input type="text" id="hostInput" placeholder="Имя ведущего..." maxlength="20">
       </div>
-      <div class="section-title" style="margin-top: 20px;">
+      <div class="section-title" style="margin-top: 16px;">
         <span class="icon">👥</span> Игроки <span class="count-badge" id="playerCount">0 / 5</span>
       </div>
       <p class="hint">От 2 до 5 игроков. Каждый по очереди скрытно вскроет свою роль.</p>
     </div>
 
     <div id="spySetupFields" class="hidden">
-      <p class="hint">Игра без ведущего. Все игроки получают карточки: кто-то локацию, а кто-то роль шпиона. Один телефон передается по кругу.</p>
+      <p class="hint">Игра без ведущего. Все игроки получают карточки: кто-то локацию, а кто-то роль шпиона.</p>
+      
+      <div class="input-row" style="gap: 12px;">
+        <div class="input-group">
+          <label>Количество шпионов</label>
+          <select id="spyCountSelect">
+            <option value="1" selected>1 шпион</option>
+            <option value="2">2 шпиона</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Время обсуждения (мин)</label>
+          <input type="number" id="spyTimeInput" min="1" max="60" value="2">
+        </div>
+      </div>
+
       <div class="section-title" style="margin-top: 10px;">
         <span class="icon">👥</span> Игроки <span class="count-badge" id="spyPlayerCount">0 / 10</span>
-      </div>
-      <p class="hint">От 3 до 10 игроков. Шпионов будет 1 (до 6 игроков) или 2 (от 7 игроков).</p>
-      
-      <div class="input-row" style="margin-top: 15px;">
-        <span style="align-self: center; color: #a89bb8; font-size: 0.9em; width: 100px;">Таймер:</span>
-        <select id="spyTimerSelect">
-          <option value="60">1 минута</option>
-          <option value="120" selected>2 минуты</option>
-          <option value="180">3 минуты</option>
-          <option value="300">5 минут</option>
-        </select>
       </div>
     </div>
 
     <div class="input-row" style="margin-top: 10px;">
       <input type="text" id="playerInput" placeholder="Имя игрока..." maxlength="20">
-      <button class="btn btn-primary" id="addPlayerBtn">Добавить</button>
+      <button class="btn btn-primary" id="addPlayerBtn" style="padding: 12px 16px;">Добавить</button>
     </div>
 
     <div id="playersList"></div>
 
     <div class="actions-row" style="margin-top: 20px;">
-      <button class="btn btn-primary" id="startGameBtn" disabled>Начать игру</button>
-      <button class="btn btn-ghost" onclick="goHome()">Назад</button>
+      <button class="btn btn-primary btn-large" id="startGameBtn" disabled style="flex: 2;">Начать игру</button>
+      <button class="btn btn-ghost" onclick="goHome()" style="flex: 1;">Назад</button>
     </div>
   </div>
 
-  <!-- ================= ЭКРАН ВСКРЫТИЯ (ОБЩИЙ ДЛЯ МАФИИ И ШПИОНА) ================= -->
+  <!-- ================= ЭКРАН ВСКРЫТИЯ ================= -->
   <div class="card hidden" id="revealCard">
     <div class="reveal-stage">
       <div class="reveal-progress" id="revealProgress"></div>
@@ -338,12 +356,12 @@
       </div>
 
       <div class="actions-row">
-        <button class="btn btn-primary" id="nextPlayerBtn" disabled>➡️ Скрыть и передать</button>
+        <button class="btn btn-primary btn-large" id="nextPlayerBtn" disabled>➡️ Скрыть и передать</button>
       </div>
     </div>
   </div>
 
-  <!-- ================= ЭКРАН ПЕРЕДАЧИ ВЕДУЩЕМУ (ТОЛЬКО МАФИЯ) ================= -->
+  <!-- ================= ЭКРАН ПЕРЕДАЧИ ВЕДУЩЕМУ (МАФИЯ) ================= -->
   <div class="card hidden" id="passCard">
     <div class="reveal-stage">
       <div class="pass-icon">👑</div>
@@ -359,7 +377,7 @@
     </div>
   </div>
 
-  <!-- ================= ПАНЕЛЬ ВЕДУЩЕГО (ТОЛЬКО МАФИЯ) ================= -->
+  <!-- ================= ПАНЕЛЬ ВЕДУЩЕГО (МАФИЯ) ================= -->
   <div class="card hidden" id="hostCard">
     <div class="host-panel-warning">
       👑 <strong>Панель ведущего</strong><br> Не показывайте этот экран игрокам.
@@ -367,33 +385,84 @@
     <div class="section-title"><span class="icon">📜</span> Кто есть кто</div>
     <div class="results-grid" id="hostResults"></div>
     <div class="actions-row" style="margin-top: 20px;">
-      <button class="btn btn-primary" onclick="startGame()">🔄 Новые роли</button>
-      <button class="btn btn-ghost" onclick="goHome()">👥 Новая игра</button>
+      <button class="btn btn-primary" onclick="startGame()" style="flex: 1;">🔄 Новые роли</button>
+      <button class="btn btn-ghost" onclick="goHome()" style="flex: 1;">👥 Новая игра</button>
     </div>
   </div>
 
-  <!-- ================= ЭКРАН ТАЙМЕРА / ГОЛОСОВАНИЯ (ТОЛЬКО ШПИОН) ================= -->
-  <div class="card hidden" id="timerCard">
+  <!-- ================= ЭКРАН СТАРТА ОБСУЖДЕНИЯ ================= -->
+  <div class="card hidden" id="discussionStartCard">
+    <div class="reveal-stage">
+      <div class="pass-icon">🗣️</div>
+      <div class="pass-title">Все готовы!</div>
+      <div class="pass-text">
+        Передайте устройство в центр стола, чтобы всем было видно таймер.
+        Нажмите кнопку ниже, чтобы запустить время обсуждения.
+      </div>
+      <button class="btn btn-primary btn-large" id="startDiscussionBtn">▶️ Начать обсуждение</button>
+    </div>
+  </div>
+
+  <!-- ================= ЭКРАН ТАЙМЕРА ОБСУЖДЕНИЯ ================= -->
+  <div class="card hidden" id="discussionCard">
     <div style="text-align: center; padding: 10px 0;">
       <div class="pass-title" style="margin-bottom: 20px;">Обсуждение</div>
+      <div class="timer-circle" id="discTimerCircle">
+        <div class="timer-inner" id="discTimerText">02:00</div>
+      </div>
+      <div class="pass-text" style="margin-top: 15px;">Задавайте вопросы и пытайтесь понять, кто не знает локацию.</div>
+    </div>
+  </div>
+
+  <!-- ================= ЭКРАН ГОЛОСОВАНИЯ ================= -->
+  <div class="card hidden" id="votingCard">
+    <div style="text-align: center; padding: 10px 0;">
+      <div class="pass-title" style="margin-bottom: 15px; color: #ffd54f;">Голосование!</div>
+      <div class="timer-circle vote-timer" id="voteTimerCircle">
+        <div class="timer-inner" id="voteTimerText">00:40</div>
+      </div>
+      <div class="pass-text" style="margin-top: 15px;">Обсудите, кого вы подозреваете, и приготовьтесь сделать выбор.</div>
+    </div>
+  </div>
+
+  <!-- ================= ЭКРАН ВЫБОРА ИГРОКА НА ВЫГОН ================= -->
+  <div class="card hidden" id="eliminateCard">
+    <div class="reveal-stage">
+      <div class="pass-title" style="margin-bottom: 16px;">Кого выгоняем?</div>
+      <div class="pass-text" style="margin-bottom: 16px;">Выберите игрока, которого команда решила изгнать, или пропустите голосование.</div>
       
-      <div class="timer-circle" id="timerCircle">
-        <div class="timer-inner" id="timerText">02:00</div>
+      <div class="input-row" style="margin-bottom: 16px;">
+        <select id="eliminateSelect" style="width: 100%; padding: 14px; font-size: 1.05em; border-radius: 12px;"></select>
       </div>
-
-      <div class="location-display hidden" id="locationDisplay" style="color: #ff6ec7; font-size: 1.2em; margin-bottom: 20px;">Локация: <span id="locationName"></span></div>
-
-      <div id="timeUpMsg" class="hidden" style="margin-bottom: 20px; padding: 15px; background: rgba(255,80,100,0.1); border: 1px solid rgba(255,80,100,0.3); border-radius: 12px;">
-        <div style="font-size: 1.2em; color: #ff7088; font-weight: bold; margin-bottom: 5px;">⏰ Время вышло!</div>
-        <div style="color: #a89bb8; font-size: 0.9em; line-height: 1.4;">
-          Шпион не раскрыт. Голосуйте и пытайтесь вычислить его самостоятельно. Если хотите сыграть еще раз с новой локацией — нажмите кнопку ниже.
-        </div>
+      
+      <div class="actions-row" style="flex-direction: column; gap: 10px;">
+        <button class="btn btn-large" id="eliminateBtn" style="background: linear-gradient(135deg, #e94560, #c2185b); color: white;">🚪 Выгнать игрока</button>
+        <button class="btn btn-neutral btn-large" id="skipEliminationBtn">🤷 Никого не выгнали</button>
       </div>
+    </div>
+  </div>
 
-      <div class="actions-row" style="margin-top: 20px; flex-direction: column;">
-        <button class="btn btn-primary btn-large hidden" id="restartSpyBtn" onclick="startGame()">🔄 Играть новый раунд</button>
-        <button class="btn btn-ghost btn-large" onclick="goHome()" style="margin-top: 10px;">🏠 В главное меню</button>
+  <!-- ================= ЭКРАН РЕЗУЛЬТАТА ВЫГОНА ================= -->
+  <div class="card hidden" id="eliminationResultCard">
+    <div class="result-screen">
+      <div class="result-icon" id="elimResultIcon">🕵️</div>
+      <div class="result-title" id="elimResultTitle">Выгнали шпиона!</div>
+      <div class="result-text" id="elimResultText">
+        Поздравляем, команда вычислила шпиона и победила!<br>Локация была: <strong id="elimResultLocation"></strong>
       </div>
+      <button class="btn btn-primary btn-large" onclick="goHome()" id="elimHomeBtn">🏠 В главное меню</button>
+    </div>
+  </div>
+
+  <!-- ================= ЭКРАН ПРОДОЛЖЕНИЯ ИГРЫ ================= -->
+  <div class="card hidden" id="continueCard">
+    <div class="result-screen">
+      <div class="result-icon" style="animation: none;">😢</div>
+      <div class="result-title" style="color: #64b5f6;">Игра продолжается!</div>
+      <div class="result-text" id="continueText">
+        Шпион всё ещё среди вас. <br> Приготовьтесь к новому раунду с новой локацией!
+      </div>
+      <button class="btn btn-primary btn-large" id="continueGameBtn">🔄 Продолжить игру</button>
     </div>
   </div>
 </div>
@@ -401,16 +470,20 @@
 <script>
 // ================= СОСТОЯНИЕ =================
 const state = {
-  mode: 'mafia', // 'mafia' | 'spy'
+  mode: 'mafia',
   host: '',
   players: [],
   assignments: null,
   revealIndex: 0,
   flipped: false,
   timerInterval: null,
-  spyTimerSeconds: 120,
+  
+  spyCount: 1,
+  spyTimeMinutes: 2,
   currentLocation: '',
-  spyLocationsUsed: [], // чтобы не повторялись
+  spyLocationsUsed: [],
+  activePlayers: [],
+  round: 1
 };
 
 const MAX_MAFIA_PLAYERS = 5;
@@ -418,7 +491,6 @@ const MIN_MAFIA_PLAYERS = 2;
 const MAX_SPY_PLAYERS = 10;
 const MIN_SPY_PLAYERS = 3;
 
-// Список локаций для шпиона
 const LOCATIONS = [
   "🌴 Тропический остров", "🚀 Космическая станция", "🏰 Средневековый замок", "🎢 Парк развлечений",
   "🏥 Больница", "🏫 Школа", "🍕 Пиццерия", "🎬 Съемочная площадка", "🏦 Банк", "🚓 Полицейский участок",
@@ -434,7 +506,6 @@ const LOCATIONS = [
   "🐊 Болото с аллигаторами", "🕍 Древний монастырь", "🚂 Ночной поезд"
 ];
 
-// Роли для мафии
 const MAFIA_ROLES = {
   mafia: { key: 'mafia', name: 'МАФИЯ', emoji: '🔫', cls: 'role-mafia', front: 'front-mafia', team: 'КОМАНДА МАФИИ', desc: 'Ночью выбираешь жертву. Днём притворяйся мирным.' },
   citizen: { key: 'citizen', name: 'МИРНЫЙ', emoji: '👤', cls: 'role-citizen', front: 'front-citizen', team: 'КОМАНДА ГОРОДА', desc: 'Днём голосуй и вычисляй мафию.' },
@@ -442,15 +513,13 @@ const MAFIA_ROLES = {
   detective: { key: 'detective', name: 'СЫЩИК', emoji: '🔍', cls: 'role-detective', front: 'front-detective', team: 'КОМАНДА ГОРОДА', desc: 'Каждую ночь проверяешь одного игрока.' }
 };
 
-// Роли для шпиона
 const SPY_ROLES = {
-  spy: { key: 'spy', name: 'ВЫ ШПИОН!', emoji: '🕵️', cls: 'role-spy', front: 'front-spy', team: 'ВАША ЦЕЛЬ: УГАДАТЬ ЛОКАЦИЮ', desc: 'Вы не знаете локацию. Слушайте других, задавайте вопросы и попытайтесь понять, где вы находитесь.' },
-  location: { key: 'location', name: 'ВЫ ЗНАЕТЕ ЛОКАЦИЮ', emoji: '📍', cls: 'role-location', front: 'front-location', team: 'ВАША ЦЕЛЬ: НАЙТИ ШПИОНА', desc: 'Задавайте вопросы про локацию так, чтобы шпион не понял, где вы. Вычислите, кто не знает локацию.' }
+  spy: { key: 'spy', name: 'ВЫ ШПИОН!', emoji: '🕵️', cls: 'role-spy', front: 'front-spy', team: 'ЦЕЛЬ: УГАДАТЬ ЛОКАЦИЮ', desc: 'Вы не знаете локацию. Слушайте других и пытайтесь понять, где вы.' },
+  location: { key: 'location', name: 'ВЫ ЗНАЕТЕ ЛОКАЦИЮ', emoji: '📍', cls: 'role-location', front: 'front-location', team: 'ЦЕЛЬ: НАЙТИ ШПИОНА', desc: 'Задавайте вопросы про локацию так, чтобы шпион не понял, где вы.' }
 };
 
 const $ = id => document.getElementById(id);
 
-// ================= УТИЛИТЫ =================
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -490,8 +559,6 @@ function startSetup() {
     $('setupTitle').textContent = 'Настройка Шпиона';
     $('mafiaSetupFields').classList.add('hidden');
     $('spySetupFields').classList.remove('hidden');
-    $('spyTimerSelect').value = '120';
-    state.spyTimerSeconds = 120;
   }
   resetSetupForm();
 }
@@ -507,16 +574,20 @@ function goHome() {
 function resetSetupForm() {
   state.host = '';
   state.players = [];
+  state.activePlayers = [];
   state.assignments = null;
   state.revealIndex = 0;
   state.flipped = false;
+  state.round = 1;
   $('hostInput').value = '';
   $('playerInput').value = '';
   updateSetupUI();
 }
 
 function showScreen(id) {
-  ['mainCard', 'setupCard', 'revealCard', 'passCard', 'hostCard', 'timerCard'].forEach(x => {
+  ['mainCard', 'setupCard', 'revealCard', 'passCard', 'hostCard', 
+   'discussionStartCard', 'discussionCard', 'votingCard', 'eliminateCard', 
+   'eliminationResultCard', 'continueCard'].forEach(x => {
     $(x).classList.toggle('hidden', x !== id);
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -524,7 +595,8 @@ function showScreen(id) {
 
 // ================= НАСТРОЙКА ИГРОКОВ =================
 $('hostInput').addEventListener('input', e => { state.host = e.target.value.trim(); updateSetupUI(); });
-$('spyTimerSelect').addEventListener('change', e => { state.spyTimerSeconds = parseInt(e.target.value); });
+$('spyCountSelect').addEventListener('change', e => { state.spyCount = parseInt(e.target.value); });
+$('spyTimeInput').addEventListener('input', e => { state.spyTimeMinutes = parseInt(e.target.value) || 2; });
 
 $('playerInput').addEventListener('keydown', e => { if (e.key === 'Enter') addPlayer(); });
 $('addPlayerBtn').addEventListener('click', addPlayer);
@@ -566,7 +638,7 @@ function updateSetupUI() {
 
   const list = $('playersList');
   if (count === 0) {
-    list.innerHTML = '<div class="empty-state" style="text-align:center;padding:20px;color:#6a5a7a;font-style:italic;">Пока нет игроков. Добавьте первого 👇</div>';
+    list.innerHTML = '<div class="empty-state" style="text-align:center;padding:15px;color:#6a5a7a;font-style:italic;font-size:0.85em;">Пока нет игроков. Добавьте первого 👇</div>';
   } else {
     list.innerHTML = state.players.map((p, i) => `
       <div class="player-item">
@@ -582,7 +654,6 @@ function updateSetupUI() {
   $('addPlayerBtn').disabled = !canAdd;
   $('playerInput').parentElement.style.opacity = canAdd ? '1' : '0.5';
 
-  // Проверка на старт
   if (isMafia) {
     $('startGameBtn').disabled = !(state.host && count >= min && count <= max);
   } else {
@@ -597,7 +668,11 @@ function startGame() {
   if (state.mode === 'mafia') {
     startMafia();
   } else {
-    startSpy();
+    if (state.round === 1) {
+      state.activePlayers = [...state.players];
+      state.spyLocationsUsed = shuffle([...LOCATIONS]);
+    }
+    startSpyRound();
   }
 }
 
@@ -632,32 +707,33 @@ function startMafia() {
 }
 
 // ================= ШПИОН =================
-function startSpy() {
-  const n = state.players.length;
-  if (n < MIN_SPY_PLAYERS || n > MAX_SPY_PLAYERS) return;
+function startSpyRound() {
+  const n = state.activePlayers.length;
+  
+  if (n <= state.spyCount) {
+    alert("Шпионы победили! Их больше некому выгонять.");
+    goHome();
+    return;
+  }
 
-  // Выбор локации (не повторяем пока не кончатся)
-  if (state.spyLocationsUsed.length === 0 || state.spyLocationsUsed.length >= LOCATIONS.length) {
+  if (state.spyLocationsUsed.length === 0) {
     state.spyLocationsUsed = shuffle([...LOCATIONS]);
   }
   state.currentLocation = state.spyLocationsUsed.pop();
 
-  // Логика шпионов
-  const spyCount = n >= 7 ? 2 : 1;
   const rolesArr = [];
-  for (let i = 0; i < spyCount; i++) rolesArr.push('spy');
-  for (let i = 0; i < n - spyCount; i++) rolesArr.push('location');
+  for (let i = 0; i < state.spyCount; i++) rolesArr.push('spy');
+  for (let i = 0; i < n - state.spyCount; i++) rolesArr.push('location');
 
   const shuffledRoles = shuffle(rolesArr);
-  const shuffledPlayers = shuffle([...state.players]);
+  const shuffledPlayers = shuffle([...state.activePlayers]);
 
   state.assignments = shuffledPlayers.map((name, i) => ({
     name,
     roleKey: shuffledRoles[i],
-    // Для шпиона роль одна, для локации подставляем название
     role: shuffledRoles[i] === 'spy' 
       ? { ...SPY_ROLES.spy } 
-      : { ...SPY_ROLES.location, name: state.currentLocation, desc: 'Локация: ' + state.currentLocation + '. Задавайте вопросы, чтобы вычислить шпиона.' }
+      : { ...SPY_ROLES.location, name: state.currentLocation, desc: 'Локация: ' + state.currentLocation + '. Задавайте вопросы.' }
   }));
 
   state.revealIndex = 0;
@@ -681,8 +757,7 @@ function renderReveal() {
 
   const player = state.assignments[idx];
   $('revealName').textContent = player.name;
-  $('revealInstruction').textContent =
-    'Передайте устройство этому игроку. Остальные — не подглядывайте!';
+  $('revealInstruction').textContent = 'Передайте устройство этому игроку. Остальные — не подглядывайте!';
 
   state.flipped = false;
   $('flipCard').classList.remove('flipped');
@@ -695,17 +770,14 @@ function renderReveal() {
   $('frontDesc').textContent = role.desc;
   $('frontTeam').textContent = role.team;
 
-  $('nextPlayerBtn').textContent = (idx === total - 1)
-    ? '✅ Готово'
-    : '➡️ Скрыть и передать';
+  $('nextPlayerBtn').textContent = (idx === total - 1) ? '✅ Готово' : '➡️ Скрыть и передать';
 }
 
 function flipCard() {
   if (state.flipped) return;
   state.flipped = true;
   $('flipCard').classList.add('flipped');
-  $('revealInstruction').textContent =
-    'Запомните информацию. Затем нажмите кнопку, чтобы скрыть карточку.';
+  $('revealInstruction').textContent = 'Запомните информацию. Затем нажмите кнопку, чтобы скрыть карточку.';
   setTimeout(() => { $('nextPlayerBtn').disabled = false; }, 500);
 }
 
@@ -717,8 +789,7 @@ $('nextPlayerBtn').addEventListener('click', () => {
       if (state.mode === 'mafia') {
         showScreen('passCard');
       } else {
-        // Для шпиона запускаем таймер
-        startSpyTimer();
+        showScreen('discussionStartCard');
       }
     } else {
       renderReveal();
@@ -726,7 +797,7 @@ $('nextPlayerBtn').addEventListener('click', () => {
   }, 400);
 });
 
-// ================= ПЕРЕДАЧА ВЕДУЩЕМУ (МАФИЯ) =================
+// ================= МАФИЯ: ВЕДУЩИЙ =================
 $('openHostBtn').addEventListener('click', () => {
   $('hostResults').innerHTML = state.assignments.map((a, i) => `
     <div class="result-card ${a.role.cls}" style="animation-delay: ${i * 0.08}s">
@@ -740,52 +811,94 @@ $('openHostBtn').addEventListener('click', () => {
   showScreen('hostCard');
 });
 
-// ================= ТАЙМЕР И ГОЛОСОВАНИЕ (ШПИОН) =================
-function startSpyTimer() {
-  showScreen('timerCard');
-  $('timeUpMsg').classList.add('hidden');
-  $('restartSpyBtn').classList.add('hidden');
-  $('locationDisplay').classList.add('hidden');
-  
-  const total = state.spyTimerSeconds;
-  let left = total;
-  const timerCircle = $('timerCircle');
-  const timerText = $('timerText');
+// ================= ШПИОН: ТАЙМЕРЫ =================
+$('startDiscussionBtn').addEventListener('click', () => {
+  startSpyTimer('discussion');
+});
 
-  function updateTimer() {
-    const mins = Math.floor(left / 60);
-    const secs = left % 60;
-    timerText.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+function startSpyTimer(type) {
+  showScreen(type === 'discussion' ? 'discussionCard' : 'votingCard');
+  
+  let totalSeconds = type === 'discussion' ? state.spyTimeMinutes * 60 : 40;
+  let left = totalSeconds;
+  
+  const circle = type === 'discussion' ? $('discTimerCircle') : $('voteTimerCircle');
+  const textEl = type === 'discussion' ? $('discTimerText') : $('voteTimerText');
+
+  function update() {
+    const m = Math.floor(left / 60);
+    const s = left % 60;
+    textEl.textContent = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
     
-    const percent = (1 - left / total) * 100;
-    timerCircle.style.background = `conic-gradient(${left <= 10 ? '#ff4444' : '#ff6ec7'} ${percent}%, rgba(255,255,255,0.1) ${percent}%)`;
+    const percent = (1 - left / totalSeconds) * 100;
+    const color = type === 'discussion' ? (left <= 10 ? '#ff4444' : '#ff6ec7') : '#ffd54f';
+    circle.style.background = `conic-gradient(${color} ${percent}%, rgba(255,255,255,0.1) ${percent}%)`;
     
-    if (left <= 10) {
-      timerCircle.classList.add('warning');
-    } else {
-      timerCircle.classList.remove('warning');
+    if (left <= 10 && type === 'discussion') {
+      circle.classList.add('warning');
     }
 
     if (left <= 0) {
       clearInterval(state.timerInterval);
-      timeIsUp();
+      if (type === 'discussion') {
+        startSpyTimer('voting');
+      } else {
+        showEliminationScreen();
+      }
     }
     left--;
   }
 
   clearInterval(state.timerInterval);
-  updateTimer();
-  state.timerInterval = setInterval(updateTimer, 1000);
+  update();
+  state.timerInterval = setInterval(update, 1000);
 }
 
-function timeIsUp() {
-  $('timerCircle').classList.add('warning');
-  $('timerText').textContent = '00:00';
-  $('timeUpMsg').classList.remove('hidden');
-  $('restartSpyBtn').classList.remove('hidden');
-  $('locationDisplay').classList.remove('hidden');
-  $('locationName').textContent = state.currentLocation;
+// ================= ШПИОН: ВЫГОН ИГРОКА =================
+function showEliminationScreen() {
+  const select = $('eliminateSelect');
+  select.innerHTML = state.activePlayers.map(p => `<option value="${escapeHtml(p)}">${escapeHtml(p)}</option>`).join('');
+  showScreen('eliminateCard');
 }
+
+$('eliminateBtn').addEventListener('click', () => {
+  const eliminatedName = $('eliminateSelect').value;
+  if (!eliminatedName) return;
+
+  const playerObj = state.assignments.find(a => a.name === eliminatedName);
+  if (!playerObj) return;
+
+  state.activePlayers = state.activePlayers.filter(p => p !== eliminatedName);
+
+  if (playerObj.roleKey === 'spy') {
+    $('elimResultIcon').textContent = '🎉';
+    $('elimResultTitle').textContent = 'Выгнали шпиона!';
+    $('elimResultTitle').style.color = '#66bb6a';
+    $('elimResultText').innerHTML = `Поздравляем, команда вычислила шпиона и победила!<br>Локация была: <strong>${state.currentLocation}</strong><br>Шпионом был(а): <strong>${escapeHtml(eliminatedName)}</strong>`;
+    showScreen('eliminationResultCard');
+  } else {
+    $('elimResultIcon').textContent = '😢';
+    $('elimResultTitle').textContent = 'Это был мирный житель!';
+    $('elimResultTitle').style.color = '#64b5f6';
+    $('continueText').innerHTML = `Выгнали <strong>${escapeHtml(eliminatedName)}</strong>, но он оказался не шпионом.<br>Игра продолжается. Шпион всё ещё среди вас!`;
+    showScreen('continueCard');
+  }
+});
+
+// ================= ШПИОН: НИКОГО НЕ ВЫГНАЛИ =================
+$('skipEliminationBtn').addEventListener('click', () => {
+  $('elimResultIcon').textContent = '🤷';
+  $('elimResultTitle').textContent = 'Никого не выгнали';
+  $('elimResultTitle').style.color = '#ffd54f';
+  $('continueText').innerHTML = `Команда решила никого не выгонять в этом раунде.<br>Игра продолжается тем же составом с новой локацией!`;
+  showScreen('continueCard');
+});
+
+// ================= ШПИОН: НОВЫЙ РАУНД =================
+$('continueGameBtn').addEventListener('click', () => {
+  state.round++;
+  startSpyRound();
+});
 
 // Инициализация при загрузке
 updateSetupUI();
