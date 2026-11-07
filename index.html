@@ -203,13 +203,8 @@
   }
 
   /* ===== Экран вскрытия ===== */
-  .reveal-stage {
-    text-align: center;
-    padding: 10px 0;
-  }
-  .reveal-progress {
-    display: flex; justify-content: center; gap: 8px; margin-bottom: 22px;
-  }
+  .reveal-stage { text-align: center; padding: 10px 0; }
+  .reveal-progress { display: flex; justify-content: center; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
   .reveal-dot {
     width: 34px; height: 34px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
@@ -229,15 +224,12 @@
     box-shadow: 0 0 18px rgba(255,110,199,0.6);
     transform: scale(1.12);
   }
-  .reveal-name {
-    font-size: 1.6em; font-weight: 700; margin-bottom: 6px;
-    color: #fff;
-  }
+  .reveal-name { font-size: 1.6em; font-weight: 700; margin-bottom: 6px; color: #fff; }
   .reveal-instruction {
     color: #a89bb8; font-size: 0.9em; margin-bottom: 24px; line-height: 1.5;
   }
 
-  /* Карточка-«рубашка» */
+  /* Карточка */
   .flip-card {
     width: 100%;
     max-width: 300px;
@@ -281,52 +273,81 @@
     filter: drop-shadow(0 0 25px rgba(255,110,199,0.5));
     animation: pulse 2s infinite;
   }
-  .flip-back .tap-hint {
-    margin-top: 18px;
-    font-size: 0.9em;
-    color: #b0a0c0;
-    letter-spacing: 1px;
-  }
+  .flip-back .tap-hint { margin-top: 18px; font-size: 0.9em; color: #b0a0c0; letter-spacing: 1px; }
   .flip-front {
     transform: rotateY(180deg);
     border: 2px solid rgba(255,255,255,0.15);
     box-shadow: 0 20px 50px rgba(0,0,0,0.6);
   }
   .flip-front .role-emoji { font-size: 4.5em; margin-bottom: 12px; }
-  .flip-front .role-name {
-    font-size: 1.6em; font-weight: 800; letter-spacing: 1px;
-    margin-bottom: 10px;
-  }
+  .flip-front .role-name { font-size: 1.6em; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
   .flip-front .role-desc {
     font-size: 0.85em; color: rgba(255,255,255,0.85);
-    text-align: center; line-height: 1.5;
-    padding: 0 10px;
+    text-align: center; line-height: 1.5; padding: 0 10px;
   }
   .flip-front .role-team {
     margin-top: 16px; font-size: 0.75em; font-weight: 700;
     padding: 5px 14px; border-radius: 20px;
     letter-spacing: 1px;
+    background: rgba(255,255,255,0.2); color: #fff;
   }
-  .front-mafia {
-    background: linear-gradient(145deg, #7a1f2e, #4a0f1a);
-  }
-  .front-mafia .role-team { background: rgba(255,255,255,0.2); color: #fff; }
-  .front-citizen {
-    background: linear-gradient(145deg, #1e4a7a, #0f2a4a);
-  }
-  .front-citizen .role-team { background: rgba(255,255,255,0.2); color: #fff; }
-  .front-doctor {
-    background: linear-gradient(145deg, #1f6b3a, #0f3a20);
-  }
-  .front-doctor .role-team { background: rgba(255,255,255,0.2); color: #fff; }
-  .front-detective {
-    background: linear-gradient(145deg, #5a2a7a, #2f0f4a);
-  }
-  .front-detective .role-team { background: rgba(255,255,255,0.2); color: #fff; }
+  .front-mafia { background: linear-gradient(145deg, #7a1f2e, #4a0f1a); }
+  .front-citizen { background: linear-gradient(145deg, #1e4a7a, #0f2a4a); }
+  .front-doctor { background: linear-gradient(145deg, #1f6b3a, #0f3a20); }
+  .front-detective { background: linear-gradient(145deg, #5a2a7a, #2f0f4a); }
 
   @keyframes pulse {
     0%, 100% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.08); opacity: 0.85; }
+  }
+
+  /* ===== Экран передачи ведущему ===== */
+  .pass-stage { text-align: center; padding: 20px 10px; }
+  .pass-icon {
+    font-size: 4em;
+    margin-bottom: 18px;
+    animation: pulse 2s infinite;
+    display: inline-block;
+  }
+  .pass-title {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #ffd54f, #ff8a65);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .pass-text {
+    color: #a89bb8;
+    font-size: 0.95em;
+    line-height: 1.6;
+    max-width: 460px;
+    margin: 0 auto 28px;
+  }
+  .host-open-btn {
+    font-size: 1.1em;
+    padding: 16px 30px;
+    background: linear-gradient(135deg, #ffd54f, #ff8a65);
+    color: #2a1a0a;
+    box-shadow: 0 6px 24px rgba(255, 200, 80, 0.4);
+  }
+  .host-open-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(255, 200, 80, 0.6);
+  }
+  .warning-note {
+    margin-top: 22px;
+    padding: 12px 16px;
+    background: rgba(255, 80, 100, 0.1);
+    border: 1px solid rgba(255, 80, 100, 0.3);
+    border-radius: 12px;
+    color: #ff9aab;
+    font-size: 0.82em;
+    max-width: 460px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
   }
 
   /* ===== Панель ведущего ===== */
@@ -461,11 +482,28 @@
     </div>
   </div>
 
-  <!-- ЭКРАН 3: Панель ведущего -->
+  <!-- ЭКРАН 3: Передача устройства ведущему -->
+  <div class="card hidden" id="passCard">
+    <div class="pass-stage">
+      <div class="pass-icon">👑</div>
+      <div class="pass-title">Все игроки увидели свои роли</div>
+      <div class="pass-text">
+        Убедитесь, что <strong>все игроки уже посмотрели свои роли</strong> и устройство
+        находится у ведущего. Только после этого открывайте панель с ролями.
+      </div>
+      <button class="btn host-open-btn" id="openHostBtn">👑 Передать устройство ведущему</button>
+      <div class="warning-note">
+        ⚠️ Нажмите эту кнопку <strong>только когда устройство у ведущего</strong>.
+        После нажатия откроется список: кто есть кто.
+      </div>
+    </div>
+  </div>
+
+  <!-- ЭКРАН 4: Панель ведущего -->
   <div class="card hidden" id="hostCard">
     <div class="host-panel-warning">
       👑 <strong>Панель ведущего</strong><br>
-      Убедитесь, что все игроки уже увидели свои роли и спрятали устройство.
+      Не показывайте этот экран игрокам.
     </div>
     <div class="section-title"><span class="icon">📜</span> Кто есть кто</div>
     <div class="results-grid" id="hostResults"></div>
@@ -481,9 +519,9 @@
 const state = {
   host: '',
   players: [],
-  assignments: null,   // [{name, role}]
-  revealIndex: 0,      // кто сейчас вскрывает
-  flipped: false       // текущая карточка открыта?
+  assignments: null,
+  revealIndex: 0,
+  flipped: false
 };
 
 const MAX_PLAYERS = 5;
@@ -663,7 +701,6 @@ function renderReveal() {
   const idx = state.revealIndex;
   const total = state.assignments.length;
 
-  // Прогресс-точки
   $('revealProgress').innerHTML = state.assignments.map((_, i) => {
     let cls = 'reveal-dot';
     if (i < idx) cls += ' done';
@@ -676,12 +713,10 @@ function renderReveal() {
   $('revealInstruction').textContent =
     'Передайте устройство этому игроку. Остальные — не подглядывайте!';
 
-  // Сброс карточки
   state.flipped = false;
   $('flipCard').classList.remove('flipped');
   $('nextPlayerBtn').disabled = true;
 
-  // Заполняем лицевую сторону
   const role = player.role;
   $('flipFront').className = 'flip-face flip-front ' + role.front;
   $('frontEmoji').textContent = role.emoji;
@@ -689,9 +724,8 @@ function renderReveal() {
   $('frontDesc').textContent = role.desc;
   $('frontTeam').textContent = role.team;
 
-  // Текст кнопки — если последний, меняем
   $('nextPlayerBtn').textContent = (idx === total - 1)
-    ? '✅ Готово — к ведущему'
+    ? '✅ Готово'
     : '➡️ Скрыть и передать';
 }
 
@@ -705,12 +739,13 @@ function flipCard() {
 }
 
 $('nextPlayerBtn').addEventListener('click', () => {
-  // Сначала прячем карточку (визуально), потом переходим
   $('flipCard').classList.remove('flipped');
   setTimeout(() => {
     state.revealIndex++;
     if (state.revealIndex >= state.assignments.length) {
-      showHostPanel();
+      // ВАЖНО: после последнего игрока НЕ показываем роли сразу,
+      // а переходим на экран передачи устройства ведущему
+      showScreen('passCard');
     } else {
       renderReveal();
     }
@@ -718,7 +753,11 @@ $('nextPlayerBtn').addEventListener('click', () => {
   }, 400);
 });
 
-// ===== Панель ведущего =====
+// ===== Передача ведущему =====
+$('openHostBtn').addEventListener('click', () => {
+  showHostPanel();
+});
+
 function showHostPanel() {
   $('hostResults').innerHTML = state.assignments.map((a, i) => `
     <div class="result-card ${a.role.cls}" style="animation-delay: ${i * 0.08}s">
@@ -730,11 +769,12 @@ function showHostPanel() {
     </div>
   `).join('');
   showScreen('hostCard');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ===== Переключение экранов =====
 function showScreen(id) {
-  ['setupCard', 'revealCard', 'hostCard'].forEach(x => {
+  ['setupCard', 'revealCard', 'passCard', 'hostCard'].forEach(x => {
     $(x).classList.toggle('hidden', x !== id);
   });
 }
