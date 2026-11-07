@@ -2,10 +2,14 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>🎭 Мафия — Тайные роли</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    overflow-x: hidden; /* Защита от горизонтального скролла */
+    width: 100%;
+  }
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
     background: radial-gradient(ellipse at top, #2a1a3e 0%, #1a1028 50%, #0d0715 100%);
@@ -16,7 +20,6 @@
     color: #e8e0f0;
     padding: 24px 16px;
     position: relative;
-    overflow-x: hidden;
   }
   body::before {
     content: '';
@@ -49,11 +52,12 @@
   .card {
     background: linear-gradient(145deg, rgba(40, 25, 60, 0.92), rgba(25, 15, 40, 0.92));
     border-radius: 20px;
-    padding: 26px;
+    padding: 26px 20px;
     margin-bottom: 20px;
     border: 1px solid rgba(176, 106, 179, 0.25);
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
     backdrop-filter: blur(10px);
+    width: 100%;
   }
   .section-title {
     font-size: 1.1em;
@@ -66,7 +70,7 @@
   }
   .section-title .icon { font-size: 1.3em; }
   .hint { font-size: 0.82em; color: #8a7a9a; margin-bottom: 14px; line-height: 1.5; }
-  .input-row { display: flex; gap: 10px; margin-bottom: 12px; animation: slideIn 0.3s; }
+  .input-row { display: flex; gap: 10px; margin-bottom: 12px; animation: slideIn 0.3s; width: 100%; }
   input[type="text"] {
     flex: 1;
     padding: 13px 16px;
@@ -87,6 +91,7 @@
   }
   input[type="text"]::placeholder { color: #6a5a7a; }
   input[type="text"]:disabled { opacity: 0.5; cursor: not-allowed; }
+  
   .btn {
     padding: 13px 22px;
     border: none;
@@ -97,7 +102,8 @@
     font-family: inherit;
     transition: all 0.25s;
     letter-spacing: 0.5px;
-    white-space: nowrap;
+    /* Убрали nowrap, чтобы текст переносился на мобилках */
+    text-align: center;
   }
   .btn-primary {
     background: linear-gradient(135deg, #ff6ec7, #b06ab3);
@@ -120,6 +126,7 @@
     font-size: 0.9em;
   }
   .btn-danger:hover { background: rgba(255, 80, 100, 0.3); }
+  
   .player-item {
     display: flex;
     align-items: center;
@@ -194,8 +201,9 @@
   .comp-chip.citizen { background: rgba(100, 181, 246, 0.15); border-color: rgba(100, 181, 246, 0.4); color: #64b5f6; }
   .comp-chip.doctor { background: rgba(102, 187, 106, 0.15); border-color: rgba(102, 187, 106, 0.4); color: #66bb6a; }
   .comp-chip.detective { background: rgba(186, 104, 200, 0.15); border-color: rgba(186, 104, 200, 0.4); color: #ba68c8; }
-  .actions-row { display: flex; gap: 12px; flex-wrap: wrap; }
-  .actions-row .btn { flex: 1; min-width: 160px; }
+  
+  .actions-row { display: flex; gap: 12px; flex-wrap: wrap; width: 100%; }
+  .actions-row .btn { flex: 1; min-width: 140px; }
   .count-badge {
     display: inline-block; padding: 2px 10px; border-radius: 20px;
     background: rgba(176, 106, 179, 0.2); color: #d4a8e8;
@@ -224,7 +232,7 @@
     box-shadow: 0 0 18px rgba(255,110,199,0.6);
     transform: scale(1.12);
   }
-  .reveal-name { font-size: 1.6em; font-weight: 700; margin-bottom: 6px; color: #fff; }
+  .reveal-name { font-size: 1.6em; font-weight: 700; margin-bottom: 6px; color: #fff; word-wrap: break-word; }
   .reveal-instruction {
     color: #a89bb8; font-size: 0.9em; margin-bottom: 24px; line-height: 1.5;
   }
@@ -232,7 +240,7 @@
   /* Карточка */
   .flip-card {
     width: 100%;
-    max-width: 300px;
+    max-width: 280px;
     aspect-ratio: 3 / 4;
     margin: 0 auto 24px;
     perspective: 1200px;
@@ -280,7 +288,7 @@
     box-shadow: 0 20px 50px rgba(0,0,0,0.6);
   }
   .flip-front .role-emoji { font-size: 4.5em; margin-bottom: 12px; }
-  .flip-front .role-name { font-size: 1.6em; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; }
+  .flip-front .role-name { font-size: 1.5em; font-weight: 800; letter-spacing: 1px; margin-bottom: 10px; text-align: center; }
   .flip-front .role-desc {
     font-size: 0.85em; color: rgba(255,255,255,0.85);
     text-align: center; line-height: 1.5; padding: 0 10px;
@@ -317,6 +325,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    line-height: 1.3;
   }
   .pass-text {
     color: #a89bb8;
@@ -325,12 +334,20 @@
     max-width: 460px;
     margin: 0 auto 28px;
   }
+  
+  /* Кнопка ведущего (Исправлена под мобильные) */
   .host-open-btn {
     font-size: 1.1em;
-    padding: 16px 30px;
+    padding: 16px 20px;
     background: linear-gradient(135deg, #ffd54f, #ff8a65);
     color: #2a1a0a;
     box-shadow: 0 6px 24px rgba(255, 200, 80, 0.4);
+    width: 100%;
+    max-width: 400px;
+    display: block;
+    margin: 0 auto;
+    white-space: normal; /* Разрешаем перенос текста */
+    line-height: 1.3;
   }
   .host-open-btn:hover {
     transform: translateY(-2px);
@@ -491,7 +508,9 @@
         Убедитесь, что <strong>все игроки уже посмотрели свои роли</strong> и устройство
         находится у ведущего. Только после этого открывайте панель с ролями.
       </div>
+      
       <button class="btn host-open-btn" id="openHostBtn">👑 Передать устройство ведущему</button>
+      
       <div class="warning-note">
         ⚠️ Нажмите эту кнопку <strong>только когда устройство у ведущего</strong>.
         После нажатия откроется список: кто есть кто.
@@ -508,7 +527,7 @@
     <div class="section-title"><span class="icon">📜</span> Кто есть кто</div>
     <div class="results-grid" id="hostResults"></div>
     <div class="actions-row" style="margin-top: 22px;">
-      <button class="btn btn-primary" id="againBtn">🔄 Тот же состав, новые роли</button>
+      <button class="btn btn-primary" id="againBtn">🔄 Новые роли</button>
       <button class="btn btn-ghost" id="newGameBtn">👥 Новая игра</button>
     </div>
   </div>
@@ -743,8 +762,6 @@ $('nextPlayerBtn').addEventListener('click', () => {
   setTimeout(() => {
     state.revealIndex++;
     if (state.revealIndex >= state.assignments.length) {
-      // ВАЖНО: после последнего игрока НЕ показываем роли сразу,
-      // а переходим на экран передачи устройства ведущему
       showScreen('passCard');
     } else {
       renderReveal();
