@@ -163,7 +163,7 @@
     letter-spacing: 1px; background: rgba(255,255,255,0.2); color: #fff;
   }
   
-  /* Цвета */
+  /* Цвета ролей */
   .front-mafia { background: linear-gradient(145deg, #7a1f2e, #4a0f1a); }
   .front-citizen { background: linear-gradient(145deg, #1e4a7a, #0f2a4a); }
   .front-doctor { background: linear-gradient(145deg, #1f6b3a, #0f3a20); }
@@ -452,7 +452,10 @@
       <div class="result-text" id="elimResultText">
         Поздравляем, команда вычислила шпиона и победила!<br>Локация была: <strong id="elimResultLocation"></strong>
       </div>
-      <button class="btn btn-primary btn-large" onclick="goHome()" id="elimHomeBtn">🏠 В главное меню</button>
+      <div class="actions-row" style="justify-content: center; flex-direction: column; gap: 10px;">
+        <button class="btn btn-primary btn-large" id="playAgainSamePlayersBtn">🔄 Начать заново (тем же составом)</button>
+        <button class="btn btn-ghost btn-large" onclick="goHome()">🏠 В главное меню</button>
+      </div>
     </div>
   </div>
 
@@ -522,6 +525,7 @@ const SPY_ROLES = {
 
 const $ = id => document.getElementById(id);
 
+// ================= УТИЛИТЫ =================
 function shuffle(arr) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -581,6 +585,7 @@ function resetSetupForm() {
   state.revealIndex = 0;
   state.flipped = false;
   state.round = 1;
+  state.currentLocation = '';
   $('hostInput').value = '';
   $('playerInput').value = '';
   updateSetupUI();
@@ -718,10 +723,13 @@ function startSpyRound() {
     return;
   }
 
-  if (state.spyLocationsUsed.length === 0) {
-    state.spyLocationsUsed = shuffle([...LOCATIONS]);
+  // Если локация не задана (первый раунд), берем новую
+  if (!state.currentLocation) {
+    if (state.spyLocationsUsed.length === 0) {
+      state.spyLocationsUsed = shuffle([...LOCATIONS]);
+    }
+    state.currentLocation = state.spyLocationsUsed.pop();
   }
-  state.currentLocation = state.spyLocationsUsed.pop();
 
   const rolesArr = [];
   for (let i = 0; i < state.spyCount; i++) rolesArr.push('spy');
@@ -818,13 +826,11 @@ $('startDiscussionBtn').addEventListener('click', () => {
   startSpyTimer('discussion');
 });
 
-// Досрочное завершение обсуждения
 $('earlyFinishDiscussionBtn').addEventListener('click', () => {
   clearInterval(state.timerInterval);
   startSpyTimer('voting');
 });
 
-// Досрочное завершение голосования
 $('earlyFinishVotingBtn').addEventListener('click', () => {
   clearInterval(state.timerInterval);
   showEliminationScreen();
@@ -833,7 +839,7 @@ $('earlyFinishVotingBtn').addEventListener('click', () => {
 function startSpyTimer(type) {
   showScreen(type === 'discussion' ? 'discussionCard' : 'votingCard');
   
-  let totalSeconds = type === 'discussion' ? state.spyTimeMinutes * 60 : 10; // 10 секунд на голосование
+  let totalSeconds = type === 'discussion' ? state.spyTimeMinutes * 60 : 10;
   let left = totalSeconds;
   
   const circle = type === 'discussion' ? $('discTimerCircle') : $('voteTimerCircle');
@@ -908,9 +914,19 @@ $('skipEliminationBtn').addEventListener('click', () => {
   showScreen('continueCard');
 });
 
-// ================= ШПИОН: НОВЫЙ РАУНД =================
+// ================= ШПИОН: НОВЫЙ РАУНД (ИГРА ПРОДОЛЖАЕТСЯ) =================
 $('continueGameBtn').addEventListener('click', () => {
   state.round++;
+  // currentLocation не сбрасывается, чтобы локация осталась той же!
+  startSpyRound();
+});
+
+// ================= ШПИОН: НАЧАТЬ ЗАНОВО ТЕМ ЖЕ СОСТАВОМ =================
+$('playAgainSamePlayersBtn').addEventListener('click', () => {
+  state.activePlayers = [...state.players];
+  state.round = 1;
+  state.currentLocation = ''; // Сбрасываем локацию, чтобы игра началась с нуля
+  state.spyLocationsUsed = shuffle([...LOCATIONS]);
   startSpyRound();
 });
 
