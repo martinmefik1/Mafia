@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎭 Мафия — Распределение ролей</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: radial-gradient(ellipse at top, #2a1a3e 0%, #1a1028 50%, #0d0715 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    color: #e8e0f0;
+    padding: 30px 20px;
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(circle at 20% 30%, rgba(200, 100, 255, 0.08) 0%, transparent 40%),
+      radial-gradient(circle at 80% 70%, rgba(255, 100, 150, 0.08) 0%, transparent 40%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .container {
+    max-width: 780px;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+  }
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  h1 {
+    font-size: 2.6em;
+    background: linear-gradient(135deg, #ff6ec7, #b06ab3, #4568dc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+    filter: drop-shadow(0 0 20px rgba(255, 110, 199, 0.4));
+  }
+  .subtitle {
+    color: #a89bb8;
+    font-size: 0.95em;
+    letter-spacing: 1px;
+  }
+  .card {
+    background: linear-gradient(145deg, rgba(40, 25, 60, 0.9), rgba(25, 15, 40, 0.9));
+    border-radius: 20px;
+    padding: 28px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(176, 106, 179, 0.25);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+  }
+  .section-title {
+    font-size: 1.15em;
+    margin-bottom: 16px;
+    color: #ff6ec7;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+  }
+  .section-title .icon { font-size: 1.3em; }
+  .hint {
+    font-size: 0.82em;
+    color: #8a7a9a;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+  .input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+    animation: slideIn 0.3s;
+  }
+  input[type="text"] {
+    flex: 1;
+    padding: 13px 16px;
+    background: rgba(10, 5, 20, 0.7);
+    border: 1.5px solid rgba(176, 106, 179, 0.3);
+    border-radius: 12px;
+    color: #e8e0f0;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.25s;
+    outline: none;
+  }
+  input[type="text"]:focus {
+    border-color: #ff6ec7;
+    box-shadow: 0 0 0 3px rgba(255, 110, 199, 0.15);
+    background: rgba(10, 5, 20, 0.9);
+  }
+  input[type="text"]::placeholder { color: #6a5a7a; }
+  .btn {
+    padding: 13px 22px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.25s;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #ff6ec7, #b06ab3);
+    color: white;
+    box-shadow: 0 5px 20px rgba(255, 110, 199, 0.35);
+  }
+  .btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(255, 110, 199, 0.55);
+  }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .btn-ghost {
+    background: rgba(176, 106, 179, 0.15);
+    color: #d4a8e8;
+    border: 1px solid rgba(176, 106, 179, 0.35);
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background: rgba(176, 106, 179, 0.28);
+    transform: translateY(-2px);
+  }
+  .btn-danger {
+    background: rgba(255, 80, 100, 0.15);
+    color: #ff7088;
+    border: 1px solid rgba(255, 80, 100, 0.35);
+    padding: 8px 12px;
+    font-size: 0.9em;
+  }
+  .btn-danger:hover { background: rgba(255, 80, 100, 0.3); }
+  .player-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    animation: slideIn 0.3s;
+  }
+  .player-item.host {
+    border-color: rgba(255, 200, 80, 0.4);
+    background: linear-gradient(90deg, rgba(255, 200, 80, 0.08), rgba(255, 200, 80, 0.02));
+  }
+  .player-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #b06ab3, #4568dc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9em;
+    flex-shrink: 0;
+  }
+  .player-item.host .player-number {
+    background: linear-gradient(135deg, #ffd54f, #ff8a65);
+  }
+  .player-name-text {
+    flex: 1;
+    font-size: 1.05em;
+    font-weight: 500;
+  }
+  .host-badge {
+    font-size: 0.75em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(255, 200, 80, 0.2);
+    color: #ffd54f;
+    border: 1px solid rgba(255, 200, 80, 0.4);
+    font-weight: 600;
+  }
+  .empty-state {
+    text-align: center;
+    padding: 25px;
+    color: #6a5a7a;
+    font-style: italic;
+    font-size: 0.9em;
+  }
+  .roles-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .role-info-item {
+    padding: 14px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    text-align: center;
+    transition: all 0.25s;
+  }
+  .role-info-item:hover {
+    transform: translateY(-3px);
+    border-color: rgba(176, 106, 179, 0.4);
+  }
+  .role-info-item .emoji { font-size: 1.8em; display: block; margin-bottom: 6px; }
+  .role-info-item .rname { font-weight: 600; font-size: 0.95em; margin-bottom: 3px; }
+  .role-info-item .rdesc { font-size: 0.75em; color: #8a7a9a; }
+
+  /* Результаты */
+  .results-grid {
+    display: grid;
+    gap: 14px;
+  }
+  .result-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(40, 25, 60, 0.95), rgba(30, 18, 48, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    animation: revealCard 0.5s backwards;
+    position: relative;
+    overflow: hidden;
+  }
+  .result-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+  }
+  .result-card.role-host::before { background: linear-gradient(180deg, #ffd54f, #ff8a65); }
+  .result-card.role-citizen::before { background: linear-gradient(180deg, #64b5f6, #42a5f5); }
+  .result-card.role-doctor::before { background: linear-gradient(180deg, #66bb6a, #43a047); }
+  .result-card.role-detective::before { background: linear-gradient(180deg, #ba68c8, #9c27b0); }
+
+  .result-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.7em;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .result-info { flex: 1; min-width: 0; }
+  .result-name {
+    font-weight: 700;
+    font-size: 1.15em;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .result-role {
+    font-size: 0.85em;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .role-host .result-role { color: #ffd54f; }
+  .role-citizen .result-role { color: #64b5f6; }
+  .role-doctor .result-role { color: #66bb6a; }
+  .role-detective .result-role { color: #ba68c8; }
+
+  .reveal-banner {
+    text-align: center;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(255, 110, 199, 0.12), rgba(69, 104, 220, 0.12));
+    border-radius: 16px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(255, 110, 199, 0.25);
+    animation: revealCard 0.4s;
+  }
+  .reveal-banner h2 {
+    font-size: 1.5em;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, #ff6ec7, #64b5f6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .reveal-banner p { color: #a89bb8; font-size: 0.9em; }
+
+  .actions-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .actions-row .btn { flex: 1; min-width: 160px; }
+
+  .count-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    background: rgba(176, 106, 179, 0.2);
+    color: #d4a8e8;
+    font-size: 0.75em;
+    font-weight: 600;
+    margin-left: 6px;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-15px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes revealCard {
+    from { opacity: 0; transform: translateY(15px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🎭 МАФИЯ</h1>
+    <p class="subtitle">Распределение ролей · Ведущий, Мирный, Доктор, Сыщик</p>
+  </header>
+
+  <!-- Настройка игроков -->
+  <div class="card" id="setupCard">
+    <div class="section-title"><span class="icon">👑</span> Ведущий</div>
+    <p class="hint">Ведущий не участвует в игре и не получает роль. Впишите его имя отдельно.</p>
+    <div class="input-row">
+      <input type="text" id="hostInput" placeholder="Имя ведущего..." maxlength="20">
+    </div>
+
+    <div class="section-title" style="margin-top: 24px;">
+      <span class="icon">👥</span> Игроки
+      <span class="count-badge" id="playerCount">0 / 3</span>
+    </div>
+    <p class="hint">Нужно ровно 3 игрока: один станет Мирным жителем, один — Доктором, один — Сыщиком.</p>
+    <div class="input-row">
+      <input type="text" id="playerInput" placeholder="Имя игрока..." maxlength="20">
+      <button class="btn btn-primary" id="addPlayerBtn">Добавить</button>
+    </div>
+
+    <div id="playersList"></div>
+
+    <div class="section-title" style="margin-top: 24px;"><span class="icon">🎲</span> Доступные роли</div>
+    <div class="roles-info">
+      <div class="role-info-item">
+        <span class="emoji">👤</span>
+        <div class="rname">Мирный житель</div>
+        <div class="rdesc">Помогает городу</div>
+      </div>
+      <div class="role-info-item">
+        <span class="emoji">🩺</span>
+        <div class="rname">Доктор</div>
+        <div class="rdesc">Лечит по ночам</div>
+      </div>
+      <div class="role-info-item">
+        <span class="emoji">🔍</span>
+        <div class="rname">Сыщик</div>
+        <div class="rdesc">Ищет мафию</div>
+      </div>
+    </div>
+
+    <div class="actions-row" style="margin-top: 24px;">
+      <button class="btn btn-primary" id="distributeBtn" disabled>🎲 Распределить роли</button>
+      <button class="btn btn-ghost" id="resetBtn">🗑️ Сбросить</button>
+    </div>
+  </div>
+
+  <!-- Результаты -->
+  <div class="card hidden" id="resultCard">
+    <div class="reveal-banner">
+      <h2>✨ Роли распределены!</h2>
+      <p>Ведущий: <strong id="resultHostName" style="color:#ffd54f"></strong></p>
+    </div>
+    <div class="results-grid" id="resultsGrid"></div>
+    <div class="actions-row" style="margin-top: 22px;">
+      <button class="btn btn-primary" id="againBtn">🔄 Распределить заново</button>
+      <button class="btn btn-ghost" id="newGameBtn">👥 Новая игра</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== Состояние =====
+const state = {
+  host: '',
+  players: [], // массив имён
+  revealed: false,
+  assignments: null // [{name, role}]
+};
+
+const ROLES = [
+  { key: 'citizen',   name: 'Мирный житель', emoji: '👤', cls: 'role-citizen' },
+  { key: 'doctor',    name: 'Доктор',        emoji: '🩺', cls: 'role-doctor' },
+  { key: 'detective', name: 'Сыщик',         emoji: '🔍', cls: 'role-detective' }
+];
+
+const $ = id => document.getElementById(id);
+
+// ===== Ввод ведущего =====
+$('hostInput').addEventListener('input', e => {
+  state.host = e.target.value.trim();
+  updateUI();
+});
+
+// ===== Добавление игрока =====
+$('playerInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') addPlayer();
+});
+$('addPlayerBtn').addEventListener('click', addPlayer);
+
+function addPlayer() {
+  const input = $('playerInput');
+  const name = input.value.trim();
+  if (!name) return;
+  if (state.players.length >= 3) return;
+  if (state.players.some(p => p.toLowerCase() === name.toLowerCase())) {
+    shakeInput(input);
+    return;
+  }
+  state.players.push(name);
+  input.value = '';
+  input.focus();
+  updateUI();
+}
+
+function removePlayer(index) {
+  state.players.splice(index, 1);
+  updateUI();
+}
+
+function shakeInput(input) {
+  input.style.transition = 'transform 0.1s';
+  input.style.transform = 'translateX(-6px)';
+  setTimeout(() => input.style.transform = 'translateX(6px)', 100);
+  setTimeout(() => input.style.transform = 'translateX(0)', 200);
+}
+
+// ===== Обновление интерфейса =====
+function updateUI() {
+  const count = state.players.length;
+  $('playerCount').textContent = `${count} / 3`;
+
+  // Список игроков
+  const list = $('playersList');
+  if (count === 0) {
+    list.innerHTML = '<div class="empty-state">Пока нет игроков. Добавьте первого 👇</div>';
+  } else {
+    list.innerHTML = state.players.map((p, i) => `
+      <div class="player-item">
+        <div class="player-number">${i + 1}</div>
+        <div class="player-name-text">${escapeHtml(p)}</div>
+        <button class="btn btn-danger" onclick="removePlayer(${i})">✕</button>
+      </div>
+    `).join('');
+  }
+
+  // Блокировка ввода при 3 игроках
+  const inputRow = $('playerInput').parentElement;
+  const canAdd = count < 3;
+  $('playerInput').disabled = !canAdd;
+  $('addPlayerBtn').disabled = !canAdd;
+  inputRow.style.opacity = canAdd ? '1' : '0.5';
+
+  // Кнопка распределения
+  $('distributeBtn').disabled = !(state.host && count === 3);
+}
+
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// ===== Распределение ролей =====
+$('distributeBtn').addEventListener('click', distributeRoles);
+
+function distributeRoles() {
+  if (!state.host || state.players.length !== 3) return;
+
+  // Перемешиваем роли
+  const shuffledRoles = shuffle([...ROLES]);
+
+  // Перемешиваем игроков (чтобы порядок был не предсказуем)
+  const shuffledPlayers = shuffle([...state.players]);
+
+  state.assignments = shuffledPlayers.map((name, i) => ({
+    name,
+    role: shuffledRoles[i]
+  }));
+
+  state.revealed = true;
+  renderResults();
+  showCard('resultCard');
+  $('setupCard').classList.add('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ===== Рендер результатов =====
+function renderResults() {
+  $('resultHostName').textContent = state.host;
+
+  const grid = $('resultsGrid');
+  grid.innerHTML = state.assignments.map((a, i) => `
+    <div class="result-card ${a.role.cls}" style="animation-delay: ${i * 0.12}s">
+      <div class="result-avatar">${a.role.emoji}</div>
+      <div class="result-info">
+        <div class="result-name">${escapeHtml(a.name)}</div>
+        <div class="result-role">${a.role.name}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function showCard(id) {
+  $(id).classList.remove('hidden');
+}
+
+// ===== Сброс / заново =====
+$('resetBtn').addEventListener('click', resetAll);
+$('newGameBtn').addEventListener('click', resetAll);
+
+$('againBtn').addEventListener('click', () => {
+  // Перераспределить с теми же игроками
+  $('resultCard').classList.add('hidden');
+  distributeRoles();
+});
+
+function resetAll() {
+  state.host = '';
+  state.players = [];
+  state.revealed = false;
+  state.assignments = null;
+  $('hostInput').value = '';
+  $('playerInput').value = '';
+  $('resultCard').classList.add('hidden');
+  $('setupCard').classList.remove('hidden');
+  updateUI();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Инициализация
+updateUI();
+</script>
+</body>
+</html>
